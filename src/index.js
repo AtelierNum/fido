@@ -1,6 +1,15 @@
-const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const Store = require("electron-store");
 const path = require('path');
 const degit = require('degit');
+
+const electronStore = new Store({
+  schema:{
+    targetDir:{
+      type: "string"
+    }
+  }
+});
 
 // Live Reload
 require('electron-reload')(__dirname, {
@@ -73,3 +82,12 @@ ipcMain.handle("download", (event, args) => {
   })
 })
 
+ipcMain.handle("select_target_dir",async (event, args) => {
+  const selectedDir = await dialog.showOpenDialog({properties:['openDirectory',"createDirectory","promptToCreate","dontAddToRecent"]}).filePaths[0];
+  electronStore.set("targetDir",selectedDir);
+  return selectedDir;
+})
+
+ipcMain.handle("get_target_dir", () => {
+  return electronStore.get("targetDir");
+})

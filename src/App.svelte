@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from "svelte";
 	import Repos from "./pages/Repos.svelte";
 
 	const pageMap = {
@@ -20,6 +21,10 @@
 	function onUpdate(args){
 		info = args.info;
 	}
+
+	onMount(async () => {
+		ipcRenderer.invoke("get_target_dir").then(target_dir => info = target_dir);
+	})
 </script>
 
 <main>
@@ -31,7 +36,8 @@
 	<h1>Hello {name}!</h1>
 	<p>{info}</p>
 	<button on:click={download}>download some shit</button>
-	<button on:click={() => {pageName = "repos"}}></button>
+	<button on:click={() => {pageName = "repos"}}>go to repo selection</button>
+	<button on:click={() => {ipcRenderer.invoke("select_target_dir").then((selectedDir => info = selectedDir))}}>select download directory</button>
 </main>
 
 <style>

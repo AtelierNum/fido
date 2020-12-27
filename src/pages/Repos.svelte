@@ -1,17 +1,49 @@
 <script>
+    import { onMount } from "svelte";
+    import marked from "marked";
+
     export let pageName;
 
-    const currentDate = new Date();
+    let readmeContent = "";
+    let readmes = {};
+
+    function changeReadme(repoName){
+        if(readmes[repoName]){
+            readmeContent = readmes[repoName];
+        }else{
+            fetch(`https://raw.githubusercontent.com/AtelierNum/${repoName}/main/README.md`).then(response => response.text()).then(data => {
+                readmeContent = data
+                readmes[repoName] = data
+            })
+        }
+    }
+
+    onMount(() => {
+        changeReadme("boilerplates");
+    }) 
 </script>
-<main>
-    <h1>Repos</h1>
-    <button on:click={() => {pageName = "index"}}>go back</button>
-    {currentDate}
-</main>
+<section>
+    <ul>
+        <li>boilerplates</li>
+        <li>unity toolkit</li>
+    </ul>
+    <!-- TODO : I still need to make the link absolute and open externaly though, same for the images-->
+    <div id="readme">{@html marked(readmeContent)}</div>
+    <div>{readmeContent}</div>
+</section>
 <style>
-    h1 {
-        text-transform: uppercase;
-        font-size: 3em;
-        font-weight: 100;
+    section {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template: 1fr / minmax(200px,1fr) 2fr;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    #readme {
+        justify-self: center;
     }
 </style>

@@ -95,7 +95,7 @@ ipcMain.handle("download", (event, args) => {
 })
 
 ipcMain.handle("select_target_dir",async (event, args) => {
-  const selectedDir = await dialog.showOpenDialog({properties:['openDirectory',"createDirectory","promptToCreate","dontAddToRecent"]}).filePaths[0];
+  const selectedDir = (await dialog.showOpenDialog({properties:['openDirectory',"createDirectory","promptToCreate","dontAddToRecent"]})).filePaths[0];
   electronStore.set("targetDir",selectedDir);
   return selectedDir;
 })

@@ -39,7 +39,7 @@
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template: 1fr / minmax(200px,1fr) 2fr;
+        grid-template: 100% / 200px 1fr;
     }
 
     ul {
@@ -47,7 +47,10 @@
     }
 
     #readme {
+        height: 100%;
         justify-self: center;
+        align-self: stretch;
+        overflow-y: auto;
     }
 
     /* TODO maybe catch the link when the event bubble up then prevent_default and open the link in default browser wtih {shell} = require("electron") */
@@ -55,5 +58,9 @@
         color: inherit;
         text-decoration: none;
         pointer-events: none;
+    }
+
+    :global(#readme img){
+        max-width: 100%;
     }
 </style>

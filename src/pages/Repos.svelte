@@ -15,6 +15,11 @@
                 data = data.replaceAll(/!\[\]\(.+\)/gi, match => {
                     return `<img src="https://raw.githubusercontent.com/AtelierNum/${repoName}/main/${match.slice(4,-1)}">`;
                 })
+
+                data = data.replaceAll(/\[.+\]\(.+\)/gi, mdLink => {
+                    return mdLink.match(/\[.+\]/i)[0].slice(1,-1);
+                })
+
                 readmeContent = data;
                 readmes[repoName] = data;
             })
@@ -26,9 +31,7 @@
         <li on:click={() => {changeReadme("boilerplates")}}>boilerplates</li>
         <li on:click={() => {changeReadme("unity_toolkit")}}>unity toolkit</li>
     </ul>
-    <!-- TODO : I still need to make the link absolute and open externaly though, same for the images-->
-    <!-- nah nevermind for the links, they are a table of content anyway so we'll browse these while browsing the templates anyway -->
-    <div id="readme">{@html marked(readmeContent)}</div>
+    <div id="readme" on:click|preventDefault>{@html marked(readmeContent)}</div>
     <div>{readmeContent}</div>
 </section>
 <style>
@@ -45,5 +48,12 @@
 
     #readme {
         justify-self: center;
+    }
+
+    /* TODO maybe catch the link when the event bubble up then prevent_default and open the link in default browser wtih {shell} = require("electron") */
+    :global(#readme a){
+        color: inherit;
+        text-decoration: none;
+        pointer-events: none;
     }
 </style>

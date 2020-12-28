@@ -1,3 +1,4 @@
+//TODO : contemplate if we can open the freshly downloaded folder into vscode instead of openning it in the file browser (maybe leave it up to the user between none or these two)
 const { app, BrowserWindow, ipcMain, dialog, shell, nativeTheme } = require('electron');
 const Store = require("electron-store");
 const path = require('path');

@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from "svelte";
     import marked from "marked";
 
     export let pageName;
@@ -11,23 +10,24 @@
         if(readmes[repoName]){
             readmeContent = readmes[repoName];
         }else{
+            // TODO : make it easier on the eyes
             fetch(`https://raw.githubusercontent.com/AtelierNum/${repoName}/main/README.md`).then(response => response.text()).then(data => {
-                readmeContent = data
-                readmes[repoName] = data
+                data = data.replaceAll(/!\[\]\(.+\)/gi, match => {
+                    return `<img src="https://raw.githubusercontent.com/AtelierNum/${repoName}/main/${match.slice(4,-1)}">`;
+                })
+                readmeContent = data;
+                readmes[repoName] = data;
             })
         }
     }
-
-    onMount(() => {
-        changeReadme("boilerplates");
-    }) 
 </script>
 <section>
     <ul>
-        <li>boilerplates</li>
-        <li>unity toolkit</li>
+        <li on:click={() => {changeReadme("boilerplates")}}>boilerplates</li>
+        <li on:click={() => {changeReadme("unity_toolkit")}}>unity toolkit</li>
     </ul>
     <!-- TODO : I still need to make the link absolute and open externaly though, same for the images-->
+    <!-- nah nevermind for the links, they are a table of content anyway so we'll browse these while browsing the templates anyway -->
     <div id="readme">{@html marked(readmeContent)}</div>
     <div>{readmeContent}</div>
 </section>

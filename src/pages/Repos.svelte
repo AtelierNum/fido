@@ -1,4 +1,5 @@
 <script>
+    //NOTE : basic idea => if the folder has a readme you can download it unless it's the top most folder (i.e one from the enum/whitelist)
     import marked from "marked";
 
     export let pageName;
@@ -28,6 +29,7 @@
 </script>
 <section>
     <ul>
+        <!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
         <li on:click={() => {changeReadme("boilerplates")}}>boilerplates</li>
         <li on:click={() => {changeReadme("unity_toolkit")}}>unity toolkit</li>
     </ul>
@@ -53,7 +55,7 @@
         overflow-y: auto;
     }
 
-    /* TODO maybe catch the link when the event bubble up then prevent_default and open the link in default browser wtih {shell} = require("electron") */
+    /* TODO maybe catch the navigation event when bubbling up then prevent_default and open the link in default browser wtih {shell} = require("electron") */
     :global(#readme a){
         color: inherit;
         text-decoration: none;

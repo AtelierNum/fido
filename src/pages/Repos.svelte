@@ -1,7 +1,7 @@
 <script>
     //NOTE : basic idea => if the folder has a readme you can download it unless it's the top most folder (i.e one from the enum/whitelist)
     import marked from "marked";
-
+    import TreeView from "../components/TreeView/TreeView.svelte"
     export let pageName;
 
     let readmeContent = "";
@@ -28,6 +28,18 @@
     }
 </script>
 <section>
+    <div>
+        <TreeView name="root" files={[
+            {
+                name:'boilerplates',
+                files: [
+                    {name:"BP1"},
+                    {name:"BP2"},
+                    {name:"BP3"},
+                ]
+            }
+        ]}/>
+    </div>
     <ul>
         <!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
         <li on:click={() => {changeReadme("boilerplates")}}>boilerplates</li>

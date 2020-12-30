@@ -8,43 +8,40 @@
     let readmes = {};
 
     function changeReadme(repoName){
-        if(readmes[repoName]){
-            readmeContent = readmes[repoName];
-        }else{
-            // TODO : make it easier on the eyes
-            fetch(`https://raw.githubusercontent.com/AtelierNum/${repoName}/main/README.md`).then(response => response.text()).then(data => {
-                data = data.replaceAll(/!\[\]\(.+\)/gi, match => {
-                    return `<img src="https://raw.githubusercontent.com/AtelierNum/${repoName}/main/${match.slice(4,-1)}">`;
-                })
+        // TODO : reactivate once TreeView is done
+        // if(readmes[repoName]){
+        //     readmeContent = readmes[repoName];
+        // }else{
+        //     // TODO : make it easier on the eyes
+        //     fetch(`https://raw.githubusercontent.com/AtelierNum/${repoName}/main/README.md`).then(response => response.text()).then(data => {
+        //         data = data.replaceAll(/!\[\]\(.+\)/gi, match => {
+        //             return `<img src="https://raw.githubusercontent.com/AtelierNum/${repoName}/main/${match.slice(4,-1)}">`;
+        //         })
 
-                data = data.replaceAll(/\[.+\]\(.+\)/gi, mdLink => {
-                    return mdLink.match(/\[.+\]/i)[0].slice(1,-1);
-                })
+        //         data = data.replaceAll(/\[.+\]\(.+\)/gi, mdLink => {
+        //             return mdLink.match(/\[.+\]/i)[0].slice(1,-1);
+        //         })
 
-                readmeContent = data;
-                readmes[repoName] = data;
-            })
-        }
+        //         readmeContent = data;
+        //         readmes[repoName] = data;
+        //     })
+        // }
     }
 </script>
 <section>
     <div>
-        <TreeView name="root" files={[
+        <!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
+        <TreeView path="AtelierNum" files={[
             {
-                name:'boilerplates',
-                files: [
-                    {name:"BP1"},
-                    {name:"BP2"},
-                    {name:"BP3"},
-                ]
+                path:'AtelierNum/boilerplates',
+                depthLimit: '3',//AtelierNum/boilerplates/unity/hello_AR_Foundation <=> {1,2,3,leaf}
+            },
+            {
+                path:'AtelierNum/unity_toolkit',
+                depthLimit: '3',//unity_toolkit/classic_modules/hello_world
             }
         ]}/>
     </div>
-    <ul>
-        <!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
-        <li on:click={() => {changeReadme("boilerplates")}}>boilerplates</li>
-        <li on:click={() => {changeReadme("unity_toolkit")}}>unity toolkit</li>
-    </ul>
     <div id="readme" on:click|preventDefault>{@html marked(readmeContent)}</div>
     <div>{readmeContent}</div>
 </section>

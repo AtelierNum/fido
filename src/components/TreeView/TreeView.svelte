@@ -2,10 +2,42 @@
 	import Leaf from './Leaf.svelte';
 
 	export let expanded = false;
-	export let name;
 	export let files;
+	export let depthLimit;
+	export let path;
+
+	$: name = path.split("/").pop() || "missing name";
+	let fetched = false;
+
+	$: depth = path.split("/").length;
+
+	const isRootPath = path => path.split("/").length == 1;
 
 	function toggle() {
+		if(!fetched){
+			fetched = true;
+
+			//TODO : fetch files by path
+			if(name == "boilerplates"){
+				files = [
+					{
+						path:path+"/BP1",
+						files:[
+							{
+								path:"boilerplates/BP1/LeafTest",
+								files:[
+									{
+										path:"boilerplates/BP1/LeafTest/UselessFile"
+									}
+								]
+							}
+						]
+					},
+					{path:path+"/BP2"},
+					{path:path+"/BP3"},
+				]
+			}
+		}
 		expanded = !expanded;
 	}
 </script>
@@ -41,8 +73,8 @@
 	<ul>
 		{#each files as file}
 			<li>
-				{#if (file.files && file.files.length != 0)}
-					<svelte:self {...file}/>
+				{#if (depth < depthLimit) || isRootPath(path)}
+					<svelte:self {depthLimit} {...file}/>
 				{:else}
 					<Leaf {...file}/>
 				{/if}

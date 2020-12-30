@@ -1,5 +1,7 @@
 <script>
-	export let name;
+	export let path;
+
+	$: name = path.split("/").pop();
 </script>
 
 <style>
@@ -10,4 +12,4 @@
 	}
 </style>
 
-<span style="background-image: url(tutorial/icons/{type}.svg)">{name}</span>
+<span style="background-image: url(tutorial/icons/{"type"}.svg)">{name}</span>

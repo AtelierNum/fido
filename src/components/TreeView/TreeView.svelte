@@ -1,44 +1,44 @@
 <script>
+	//TODO might be nice to split the root element as its own component
+	// ... given all the tweaks here to accomodate both normal nodes and root behavior
 	import Leaf from './Leaf.svelte';
 
 	export let expanded = false;
-	export let files;
+	export let files = [];
 	export let depthLimit;
 	export let path;
 
-	$: name = path.split("/").pop() || "missing name";
-	let fetched = false;
+	//TODO no seriously, accomodating root behavior is starting to be irritating
+	expanded = path.split("/").length == 1 ? true : false;
 
+	let loading = false;
+	let loaded = false;
+
+	$: name = path.split("/").pop() || "missing name";
 	$: depth = path.split("/").length;
 
 	const isRootPath = path => path.split("/").length == 1;
 
-	function toggle() {
-		if(!fetched){
-			fetched = true;
+	async function toggle() {
+		if(!loaded){
+			loading = true;
 
-			//TODO : fetch files by path
-			if(name == "boilerplates"){
-				files = [
-					{
-						path:path+"/BP1",
-						files:[
-							{
-								path:"boilerplates/BP1/LeafTest",
-								files:[
-									{
-										path:"boilerplates/BP1/LeafTest/UselessFile"
-									}
-								]
-							}
-						]
-					},
-					{path:path+"/BP2"},
-					{path:path+"/BP3"},
-				]
-			}
+			//TODO I shouldn't have to do something that ugly
+			//but https://www.youtube.com/watch?v=SETnK2ny1R0&ab_channel=EspenSandeLarsen-Topic
+			//but ... but ... https://github.com/dwmkerr/hacker-laws#the-broken-windows-theory
+			const fetchArgs = path.split("/");
+			const content = await (await fetch(`https://api.github.com/repos/${fetchArgs.slice(0,2).join("/")}/contents/${fetchArgs.slice(2).join("/")}`)).json();
+
+			content.forEach(el => {
+				if (el.type == "dir") files.push({path: path+"/"+el.path.split("/").pop()})
+			})
+			
+			expanded = !expanded;
+			loaded = true;
+			loading = false;
+		}else if(!loading){
+			expanded = !expanded;
 		}
-		expanded = !expanded;
 	}
 </script>
 

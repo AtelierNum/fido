@@ -81,8 +81,8 @@ app.on('activate', () => {
 
 ipcMain.handle("download", (event, {path}) => {
   const emitter = degit(path+"#main",{
-    cache: true,
-    force: true,
+    cache: true,//TODO maybe leave this up to the user as a checkbox in a preference page
+    force: true,//TODO maybe leave this up to the user as a checkbox in a preference page
     verbose: true
   });
 
@@ -94,8 +94,7 @@ ipcMain.handle("download", (event, {path}) => {
     }
   })
 
-  emitter.clone(__dirname+"/trash").then('info', () => {
-  })
+  emitter.clone(__dirname+"/trash").then(() => {/*no-op*/})
 })
 
 ipcMain.handle("select_target_dir",async (event, args) => {

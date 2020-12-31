@@ -79,8 +79,9 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.handle("download", (event, args) => {
-  const emitter = degit("AtelierNum/boilerplates#main",{
+ipcMain.handle("download", (event, {path}) => {
+  console.log(path);
+  const emitter = degit(path+"#main",{
     cache: true,
     force: true,
     verbose: true

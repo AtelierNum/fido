@@ -1,10 +1,10 @@
 <script>
+	import { downloadTarget } from "./store";
 	import { onMount } from "svelte";
 	import Repos from "./pages/Repos.svelte";
 	import Templates from "./pages/Templates.svelte";
 	import Save from "./pages/Save.svelte";
 	
-
 	const pageMap = {
 		repos: Repos,
 		templates: Templates,
@@ -15,12 +15,13 @@
 	export let ipcRenderer;
 
 	let pageName = "repos";
-
 	let info = "";
+	let dlTarget;
+	let downloadTargetWatcher = downloadTarget.subscribe(value => {dlTarget = value});
 
-	function download(){
+	function download(contentPath){
 		ipcRenderer.on("update",onUpdate);
-		ipcRenderer.invoke("download",{arg1:"I am arg1",arg2:"and I am args2"});
+		ipcRenderer.invoke("download",{path:contentPath});
 	}
 
 	function onUpdate(args){
@@ -38,6 +39,7 @@
 	{:else}
 		<h1>Ah ...</h1>
 	{/if}
+	<button on:click={() => {download(dlTarget)}}>Download</button>
 	<h1>Hello {name}!</h1>
 	<p>{info}</p>
 	<button on:click={download}>download some shit</button>

@@ -1,4 +1,6 @@
 <script>
+	import { downloadTarget } from "../../store";
+
 	export let path;
 
 	$: name = path.split("/").pop();
@@ -12,4 +14,4 @@
 	}
 </style>
 
-<span style="background-image: url(tutorial/icons/{"type"}.svg)">{name}</span>
+<span on:click={() => {downloadTarget.update(() => path)}} style="background-image: url(tutorial/icons/{"type"}.svg)">{name}</span>

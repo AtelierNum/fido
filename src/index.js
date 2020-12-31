@@ -80,7 +80,6 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 ipcMain.handle("download", (event, {path}) => {
-  console.log(path);
   const emitter = degit(path+"#main",{
     cache: true,
     force: true,
@@ -89,10 +88,13 @@ ipcMain.handle("download", (event, {path}) => {
 
   emitter.on('info', info => {
     event.sender.send("update",{info});
+    
+    if(info.code == "SUCCESS"){
+      shell.openPath(info.dest);
+    }
   })
 
-  emitter.clone(__dirname+"/trash").then('info', _ => {
-    event.sender.send("update",{info});
+  emitter.clone(__dirname+"/trash").then('info', () => {
   })
 })
 

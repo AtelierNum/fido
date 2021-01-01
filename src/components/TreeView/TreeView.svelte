@@ -3,6 +3,7 @@
 	// ... given all the tweaks here to accomodate both normal nodes and root behavior
 	import { focusedGitHubPath, focusedPathisLeaf } from "../../store";
 	import Leaf from './Leaf.svelte';
+	import ToggleExpandButton from './ToggleExpandButton.svelte'
 
 	export let expanded = false;
 	export let files = [];
@@ -22,9 +23,6 @@
 
 	async function toggle() {
 		//TODO split the folding/unfolding and focus/unfocus logics
-		focusedGitHubPath.update(() => path);
-		focusedPathisLeaf.update(() => false);
-
 		if(!loaded){
 			loading = true;
 
@@ -45,6 +43,11 @@
 			expanded = !expanded;
 		}
 	}
+
+	function selectReadme(){
+		focusedGitHubPath.update(() => path);
+		focusedPathisLeaf.update(() => false);
+	}
 </script>
 
 <style>
@@ -54,6 +57,7 @@
 		background-size: 1em 1em;
 		font-weight: bold;
 		cursor: pointer;
+		display: flex;
 	}
 
 	.expanded {
@@ -72,7 +76,10 @@
 	}
 </style>
 
-<span class:expanded on:click={toggle}>{name}</span>
+<span class:expanded>
+	<ToggleExpandButton open={expanded} onclick={toggle}/>
+	<div on:click={selectReadme}>{name}</div>
+</span>
 
 {#if expanded}
 	<ul>

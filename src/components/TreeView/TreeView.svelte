@@ -32,7 +32,8 @@
 			const content = await (await fetch(`https://api.github.com/repos/${fetchArgs.slice(0,2).join("/")}/contents/${fetchArgs.slice(2).join("/")}`)).json();
 
 			content.forEach(el => {
-				if (el.type == "dir") files.push({path: path+"/"+el.path.split("/").pop()})
+				if (el.type == "dir" && !el.name.toLowerCase().includes("readme_resources"))
+					files.push({path: path+"/"+el.path.split("/").pop()})
 			})
 			
 			expanded = !expanded;

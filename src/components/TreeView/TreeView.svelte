@@ -22,7 +22,6 @@
 	const isRootPath = path => path.split("/").length == 1;
 
 	async function toggle() {
-		//TODO split the folding/unfolding and focus/unfocus logics
 		if(!loaded){
 			loading = true;
 

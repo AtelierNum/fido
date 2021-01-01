@@ -3,7 +3,6 @@
     import marked from "marked";
     import { focusedGitHubPath } from "../store";
     import TreeView from "../components/TreeView/TreeView.svelte"
-    export let pageName;
 
     let readmeContent = "";
     let readmes = {};
@@ -50,7 +49,6 @@
         ]}/>
     </div>
     <div id="readme" on:click|preventDefault>{@html readmeContent}</div>
-    <div>{$focusedGitHubPath}</div>
 </section>
 <style>
     section {

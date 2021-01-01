@@ -2,16 +2,8 @@
 	import { focusedGitHubPath, focusedPathisLeaf } from "./store";
 	import { onMount } from "svelte";
 	import Repos from "./pages/Repos.svelte";
-	import Templates from "./pages/Templates.svelte";
-	import Save from "./pages/Save.svelte";
+	import Toaster from "./components/Toaster.svelte"
 	
-	const pageMap = {
-		repos: Repos,
-		templates: Templates,
-		save: Save
-	}
-	
-	export let name;
 	export let ipcRenderer;
 
 	let pageName = "repos";
@@ -34,18 +26,16 @@
 </script>
 
 <main>
-	{#if  Object.keys(pageMap).includes(pageName)}
-		<svelte:component this={pageMap[pageName]} bind:pageName/>
-	{:else}
-		<h1>Ah ...</h1>
-	{/if}
-	<button 
+	<Repos/>
+	<div class="downloadInteraction">
+		<Toaster/>
+		<button 
 		disabled={!$focusedPathisLeaf}
 		on:click={() => {download(dlTarget)}}>
 		Download
-	</button>
-	<h1>Hello {name}!</h1>
-	<button on:click={() => {ipcRenderer.invoke("select_target_dir").then((selectedDir => info = selectedDir))}}>select download directory</button>
+		</button>
+		<button on:click={() => {ipcRenderer.invoke("select_target_dir").then((selectedDir => info = selectedDir))}}>select download directory</button>	
+	</div>
 </main>
 
 <style>
@@ -53,6 +43,15 @@
 		max-width: 100%;
 		width: 100%;
 		height: 100%;
+	}
+
+	.downloadInteraction{
+		position: fixed;
+		right: 20px;
+		bottom: 20px;
+		display: flex;
+		flex-direction: column;
+		background-color: ivory;
 	}
 	/* h1 {
 		color: #ff3e00;

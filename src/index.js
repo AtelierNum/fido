@@ -19,7 +19,8 @@ nativeTheme.themeSource = "light";
 const electronStore = new Store({
   schema:{
     targetDir:{
-      type: "string"
+      type: "string",
+      default: path.join(app.getPath("documents"),"fido")
     }
   }
 });

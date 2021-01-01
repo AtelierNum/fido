@@ -1,5 +1,4 @@
 <script>
-    //NOTE : basic idea => if the folder has a readme you can download it unless it's the top most folder (i.e one from the enum/whitelist)
     import marked from "marked";
     import { focusedGitHubPath } from "../store";
     import TreeView from "../components/TreeView/TreeView.svelte"
@@ -10,15 +9,12 @@
     // TODO : make it easier on the eyes
     const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
         if(value){
-            console.log(value);
-
             if(readmes[value]){
                 readmeContent = readmes[value];
             }else{
                 fetch(`https://raw.githubusercontent.com/${value.split("/").slice(0,2).join("/")}/main/${value.split("/").slice(2).join("/")}/README.md`)
                 .then(res => res.ok ? res.text() : 'No readme found in this folder. Is it named "README.md"?')
                 .then(data => {
-                    console.log("data",data);
                     data = data.replaceAll(/!\[\]\(.+\)/gi, match => {
                         return `<img src="https://raw.githubusercontent.com/${value.split("/").slice(0,2).join("/")}/main/${match.slice(4,-1)}">`;
                     })

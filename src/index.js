@@ -95,7 +95,7 @@ ipcMain.handle("download", (event, {path}) => {
     }
   })
 
-  emitter.clone(__dirname+"/trash").then(() => {/*no-op*/})
+  emitter.clone(electronStore.get("targetDir")+"/"+path.split('/').pop()).then(() => {/*no-op*/})
 })
 
 ipcMain.handle("select_target_dir",async (event, args) => {

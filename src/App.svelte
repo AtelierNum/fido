@@ -1,12 +1,11 @@
 <script>
-	import { focusedGitHubPath, focusedPathisLeaf } from "./store";
+	import { focusedGitHubPath, focusedPathisLeaf,  toastMsg} from "./store";
 	import { onMount } from "svelte";
 	import Repos from "./pages/Repos.svelte";
 	import Toaster from "./components/Toaster.svelte"
 	
 	export let ipcRenderer;
 
-	let pageName = "repos";
 	let info = "";
 	let dlTarget;
 	let downloadTargetWatcher = focusedGitHubPath.subscribe(value => {dlTarget = value});
@@ -18,6 +17,7 @@
 
 	function onUpdate(args){
 		info = args.info;
+		toastMsg.update(() => "download completed")
 	}
 
 	onMount(async () => {

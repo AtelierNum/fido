@@ -1,6 +1,7 @@
 <script>
 	//TODO might be nice to split the root element as its own component
 	// ... given all the tweaks here to accomodate both normal nodes and root behavior
+	import { focusedGitHubPath, focusedPathisLeaf } from "../../store";
 	import Leaf from './Leaf.svelte';
 
 	export let expanded = false;
@@ -20,6 +21,10 @@
 	const isRootPath = path => path.split("/").length == 1;
 
 	async function toggle() {
+		//TODO split the folding/unfolding and focus/unfocus logics
+		focusedGitHubPath.update(() => path);
+		focusedPathisLeaf.update(() => false);
+
 		if(!loaded){
 			loading = true;
 

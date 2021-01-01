@@ -1,32 +1,39 @@
 <script>
     //NOTE : basic idea => if the folder has a readme you can download it unless it's the top most folder (i.e one from the enum/whitelist)
     import marked from "marked";
+    import { focusedGitHubPath } from "../store";
     import TreeView from "../components/TreeView/TreeView.svelte"
     export let pageName;
 
     let readmeContent = "";
     let readmes = {};
 
-    function changeReadme(repoName){
-        // TODO : reactivate once TreeView is done
-        // if(readmes[repoName]){
-        //     readmeContent = readmes[repoName];
-        // }else{
-        //     // TODO : make it easier on the eyes
-        //     fetch(`https://raw.githubusercontent.com/AtelierNum/${repoName}/main/README.md`).then(response => response.text()).then(data => {
-        //         data = data.replaceAll(/!\[\]\(.+\)/gi, match => {
-        //             return `<img src="https://raw.githubusercontent.com/AtelierNum/${repoName}/main/${match.slice(4,-1)}">`;
-        //         })
+    // TODO : make it easier on the eyes
+    const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
+        if(value){
+            console.log(value);
 
-        //         data = data.replaceAll(/\[.+\]\(.+\)/gi, mdLink => {
-        //             return mdLink.match(/\[.+\]/i)[0].slice(1,-1);
-        //         })
+            if(readmes[value]){
+                readmeContent = readmes[value];
+            }else{
+                fetch(`https://raw.githubusercontent.com/${value.split("/").slice(0,2).join("/")}/main/${value.split("/").slice(2).join("/")}/README.md`)
+                .then(res => res.ok ? res.text() : 'No readme found in this folder. Is it named "README.md"?')
+                .then(data => {
+                    console.log("data",data);
+                    data = data.replaceAll(/!\[\]\(.+\)/gi, match => {
+                        return `<img src="https://raw.githubusercontent.com/${value.split("/").slice(0,2).join("/")}/main/${match.slice(4,-1)}">`;
+                    })
 
-        //         readmeContent = data;
-        //         readmes[repoName] = data;
-        //     })
-        // }
-    }
+                    data = data.replaceAll(/\[.+\]\(.+\)/gi, mdLink => {
+                        return mdLink.match(/\[.+\]/i)[0].slice(1,-1);
+                    })
+
+                    readmes[value] = marked(data);
+                    readmeContent = readmes[value];
+                })
+            }
+        }
+    })
 </script>
 <section>
     <div>
@@ -42,8 +49,8 @@
             }
         ]}/>
     </div>
-    <div id="readme" on:click|preventDefault>{@html marked(readmeContent)}</div>
-    <div>{readmeContent}</div>
+    <div id="readme" on:click|preventDefault>{@html readmeContent}</div>
+    <div>{$focusedGitHubPath}</div>
 </section>
 <style>
     section {

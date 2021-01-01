@@ -1,5 +1,5 @@
 <script>
-	import { downloadTarget } from "../../store";
+	import { focusedGitHubPath, focusedPathisLeaf } from "../../store";
 
 	export let path;
 
@@ -14,4 +14,7 @@
 	}
 </style>
 
-<span on:click={() => {downloadTarget.update(() => path)}} style="background-image: url(tutorial/icons/{"type"}.svg)">{name}</span>
+<span on:click={() => {
+	focusedGitHubPath.update(() => path)
+	focusedPathisLeaf.update(() => true)
+}} style="background-image: url(tutorial/icons/{"type"}.svg)">{name}</span>

@@ -1,5 +1,5 @@
 <script>
-	import { downloadTarget } from "./store";
+	import { focusedGitHubPath, focusedPathisLeaf } from "./store";
 	import { onMount } from "svelte";
 	import Repos from "./pages/Repos.svelte";
 	import Templates from "./pages/Templates.svelte";
@@ -17,7 +17,7 @@
 	let pageName = "repos";
 	let info = "";
 	let dlTarget;
-	let downloadTargetWatcher = downloadTarget.subscribe(value => {dlTarget = value});
+	let downloadTargetWatcher = focusedGitHubPath.subscribe(value => {dlTarget = value});
 
 	function download(contentPath){
 		ipcRenderer.on("update",onUpdate);
@@ -39,11 +39,12 @@
 	{:else}
 		<h1>Ah ...</h1>
 	{/if}
-	<button on:click={() => {download(dlTarget)}}>Download</button>
+	<button 
+		disabled={!$focusedPathisLeaf}
+		on:click={() => {download(dlTarget)}}>
+		Download
+	</button>
 	<h1>Hello {name}!</h1>
-	<p>{info}</p>
-	<button on:click={download}>download some shit</button>
-	<button on:click={() => {pageName = "repos"}}>go to repo selection</button>
 	<button on:click={() => {ipcRenderer.invoke("select_target_dir").then((selectedDir => info = selectedDir))}}>select download directory</button>
 </main>
 

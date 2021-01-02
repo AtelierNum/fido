@@ -16,6 +16,7 @@ nativeTheme.themeSource = "light";
 }
 */
 
+//TODO maybe have a boolean to ask if we should use a general targetDir or let a user select a targetDir for every download
 const electronStore = new Store({
   schema:{
     targetDir:{
@@ -90,6 +91,8 @@ ipcMain.handle("download", (event, {path}) => {
   emitter.on('info', info => {
     event.sender.send("update",{info});
     
+    //TODO : maybe don't open in file explorer right away
+    //maybe show a toast containing a button to allow the opening in file expolrer
     if(info.code == "SUCCESS"){
       shell.openPath(info.dest);
     }

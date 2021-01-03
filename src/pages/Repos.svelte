@@ -82,7 +82,7 @@
 		<!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
 		<TreeView
 			path="AtelierNum"
-			files={[{ path: 'AtelierNum/boilerplates', depthLimit: '3' }, { path: 'AtelierNum/unity_toolkit', depthLimit: '3' }]} /> //AtelierNum/boilerplates/unity/hello_AR_Foundation <=> {1,2,3,leaf} //unity_toolkit/classic_modules/hello_world
+            files={[{ path: 'AtelierNum/boilerplates', depthLimit: '3' }, { path: 'AtelierNum/unity_toolkit', depthLimit: '3' }]} /> 
 	</div>
 	<div id="readme" on:click|preventDefault>
 		{@html readmeContent}

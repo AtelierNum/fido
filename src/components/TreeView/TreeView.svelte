@@ -2,8 +2,8 @@
 	//TODO might be nice to split the root element as its own component
 	// ... given all the tweaks here to accomodate both normal nodes and root behavior
 	import { focusedGitHubPath, focusedPathisLeaf } from "../../store";
-	import Leaf from './Leaf.svelte';
-	import ToggleExpandButton from './ToggleExpandButton.svelte'
+	import Leaf from "./Leaf.svelte";
+	import ToggleExpandButton from "./ToggleExpandButton.svelte";
 
 	export let expanded = false;
 	export let files = [];
@@ -22,29 +22,38 @@
 	const isRootPath = path => path.split("/").length == 1;
 
 	async function toggle() {
-		if(!loaded){
+		if (!loaded) {
 			loading = true;
 
 			//TODO I shouldn't have to do something that ugly
 			//but https://www.youtube.com/watch?v=SETnK2ny1R0&ab_channel=EspenSandeLarsen-Topic
 			//but ... but ... https://github.com/dwmkerr/hacker-laws#the-broken-windows-theory
 			const fetchArgs = path.split("/");
-			const content = await (await fetch(`https://api.github.com/repos/${fetchArgs.slice(0,2).join("/")}/contents/${fetchArgs.slice(2).join("/")}`)).json();
+			const content = await (
+				await fetch(
+					`https://api.github.com/repos/${fetchArgs
+						.slice(0, 2)
+						.join("/")}/contents/${fetchArgs.slice(2).join("/")}`
+				)
+			).json();
 
 			content.forEach(el => {
-				if (el.type == "dir" && !el.name.toLowerCase().includes("readme_resources"))
-					files.push({path: path+"/"+el.path.split("/").pop()})
-			})
-			
+				if (
+					el.type == "dir" &&
+					!el.name.toLowerCase().includes("readme_resources")
+				)
+					files.push({ path: path + "/" + el.path.split("/").pop() });
+			});
+
 			expanded = !expanded;
 			loaded = true;
 			loading = false;
-		}else if(!loading){
+		} else if (!loading) {
 			expanded = !expanded;
 		}
 	}
 
-	function selectReadme(){
+	function selectReadme() {
 		focusedGitHubPath.update(() => path);
 		focusedPathisLeaf.update(() => false);
 	}
@@ -77,7 +86,7 @@
 </style>
 
 <span class:expanded>
-	<ToggleExpandButton open={expanded} onclick={toggle}/>
+	<ToggleExpandButton open={expanded} onclick={toggle} />
 	<div on:click={selectReadme}>{name}</div>
 </span>
 
@@ -85,10 +94,10 @@
 	<ul>
 		{#each files as file}
 			<li>
-				{#if (depth < depthLimit) || isRootPath(path)}
-					<svelte:self {depthLimit} {...file}/>
+				{#if depth < depthLimit || isRootPath(path)}
+					<svelte:self {depthLimit} {...file} />
 				{:else}
-					<Leaf {...file}/>
+					<Leaf {...file} />
 				{/if}
 			</li>
 		{/each}

@@ -1,13 +1,13 @@
-const {ipcRenderer}  = require('electron');
+const { ipcRenderer } = require("electron");
 
-import App from './App.svelte';
+import App from "./App.svelte";
 
 const app = new App({
 	target: document.body,
 	props: {
-		name: 'fido',
-		ipcRenderer
-	}
+		name: "fido",
+		ipcRenderer,
+	},
 });
 
 export default app;

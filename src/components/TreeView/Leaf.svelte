@@ -14,7 +14,9 @@
 	}
 </style>
 
-<span on:click={() => {
-	focusedGitHubPath.update(() => path)
-	focusedPathisLeaf.update(() => true)
-}} style="background-image: url(tutorial/icons/{"type"}.svg)">{name}</span>
+<span
+	on:click={() => {
+		focusedGitHubPath.update(() => path);
+		focusedPathisLeaf.update(() => true);
+	}}
+	style="background-image: url(tutorial/icons/{'type'}.svg)">{name}</span>

@@ -1,15 +1,9 @@
 //TODO : contemplate if we can open the freshly downloaded folder into vscode instead of openning it in the file browser (maybe leave it up to the user between none or these two)
-const {
-	app,
-	BrowserWindow,
-	ipcMain,
-	dialog,
-	shell,
-	nativeTheme,
-} = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, shell, nativeTheme } = require("electron");
 const Store = require("electron-store");
 const path = require("path");
 const degit = require("degit");
+const fs = require("fs").promises;
 
 //TODO stop forcing light mode once the styling is done
 nativeTheme.themeSource = "light";
@@ -88,7 +82,7 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-ipcMain.handle("download", (event, { path }) => {
+ipcMain.handle("download", async (event, { path }) => {
 	const emitter = degit(path + "#main", {
 		cache: true, //TODO maybe leave this up to the user as a checkbox in a preference page
 		force: true, //TODO maybe leave this up to the user as a checkbox in a preference page
@@ -105,22 +99,15 @@ ipcMain.handle("download", (event, { path }) => {
 		}
 	});
 
-	emitter
-		.clone(electronStore.get("targetDir") + "/" + path.split("/").pop())
-		.then(() => {
-			/*no-op*/
-		});
+	const targetPath = electronStore.get("targetDir") + "/" + path.split("/").pop();
+	await fs.mkdir(targetPath, { recursive: true });
+	await emitter.clone(targetPath);
 });
 
 ipcMain.handle("select_target_dir", async (event, args) => {
 	const selectedDir = (
 		await dialog.showOpenDialog({
-			properties: [
-				"openDirectory",
-				"createDirectory",
-				"promptToCreate",
-				"dontAddToRecent",
-			],
+			properties: ["openDirectory", "createDirectory", "promptToCreate", "dontAddToRecent"],
 		})
 	).filePaths[0];
 	electronStore.set("targetDir", selectedDir);

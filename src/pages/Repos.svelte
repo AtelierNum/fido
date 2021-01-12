@@ -51,7 +51,8 @@
 		width: 100%;
 		height: 100%;
 		display: grid;
-		grid-template: 100% / 200px 1fr;
+		grid-template: 100% / auto 1fr;
+		grid-gap: 1em;
 	}
 
 	ul {
@@ -60,8 +61,8 @@
 
 	#readme {
 		height: 100%;
+		width:100%;
 		justify-self: center;
-		align-self: stretch;
 		overflow-y: auto;
 	}
 

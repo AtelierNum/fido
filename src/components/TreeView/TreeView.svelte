@@ -2,6 +2,7 @@
 	//TODO might be nice to split the root element as its own component
 	// ... given all the tweaks here to accomodate both normal nodes and root behavior
 	import { focusedGitHubPath, focusedPathisLeaf } from "../../store";
+	import { fly } from "svelte/transition";
 	import Leaf from "./Leaf.svelte";
 	import ToggleExpandButton from "./ToggleExpandButton.svelte";
 
@@ -15,11 +16,20 @@
 
 	let loading = false;
 	let loaded = false;
+	let focused = false;
 
 	$: name = path.split("/").pop() || "missing name";
 	$: depth = path.split("/").length;
 
 	const isRootPath = path => path.split("/").length == 1;
+
+	const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
+		if(value === path){
+			focused = true;
+		}else{
+			focused = false;
+		}
+	});
 
 	async function toggle() {
 		if (!loaded) {
@@ -73,6 +83,10 @@
 		background-image: url(tutorial/icons/folder-open.svg);
 	}
 
+	.focused {
+		background-color: lightsalmon;
+	}
+
 	ul {
 		padding: 0.2em 0 0 0.5em;
 		margin: 0 0 0 0.5em;
@@ -87,11 +101,11 @@
 
 <span class:expanded>
 	<ToggleExpandButton open={expanded} onclick={toggle} />
-	<div on:click={selectReadme}>{name}</div>
+	<div class:focused on:click={selectReadme}>{name}</div>
 </span>
 
 {#if expanded}
-	<ul>
+	<ul transition:fly={{ y: -20 }}>
 		{#each files as file}
 			<li>
 				{#if depth < depthLimit || isRootPath(path)}

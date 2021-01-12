@@ -42,8 +42,8 @@ if (require("electron-squirrel-startup")) {
 const createWindow = () => {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
+		width: 1024,
+		height: 576,
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false,
@@ -91,17 +91,14 @@ ipcMain.handle("download", async (event, { path }) => {
 
 	emitter.on("info", info => {
 		event.sender.send("update", { info });
-
-		//TODO : maybe don't open in file explorer right away
-		//maybe show a toast containing a button to allow the opening in file expolrer
-		if (info.code == "SUCCESS") {
-			shell.openPath(info.dest);
-		}
 	});
 
 	const targetPath = electronStore.get("targetDir") + "/" + path.split("/").pop();
 	await fs.mkdir(targetPath, { recursive: true });
 	await emitter.clone(targetPath);
+	//TODO : maybe don't open in file explorer right away
+	//maybe show a toast containing a button to allow the opening in file expolrer
+	shell.openPath(targetPath);
 });
 
 ipcMain.handle("select_target_dir", async (event, args) => {

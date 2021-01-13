@@ -4,6 +4,16 @@
 	export let path;
 
 	$: name = path.split("/").pop();
+
+	let focused = false;
+
+	const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
+		if(value === path){
+			focused = true;
+		}else{
+			focused = false;
+		}
+	});
 </script>
 
 <style>
@@ -12,9 +22,14 @@
 		background: 0 0.1em no-repeat;
 		background-size: 1em 1em;
 	}
+
+	.focused {
+		background-color: lightsalmon;
+	}
 </style>
 
 <span
+	class:focused
 	on:click={() => {
 		focusedGitHubPath.update(() => path);
 		focusedPathisLeaf.update(() => true);

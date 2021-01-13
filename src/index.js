@@ -1,5 +1,6 @@
 //TODO : contemplate if we can open the freshly downloaded folder into vscode instead of openning it in the file browser (maybe leave it up to the user between none or these two)
 const { app, BrowserWindow, ipcMain, dialog, shell, nativeTheme } = require("electron");
+const isDev = require("electron-is-dev");
 const Store = require("electron-store");
 const path = require("path");
 const degit = require("degit");
@@ -47,14 +48,19 @@ const createWindow = () => {
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false,
+			devTools: isDev,
 		},
 	});
 
 	// and load the index.html of the app.
 	mainWindow.loadFile(path.join(__dirname, "../public/index.html"));
 
-	// Open the DevTools.
-	mainWindow.webContents.openDevTools();
+	if (isDev) {
+		// Open the DevTools.
+		mainWindow.webContents.openDevTools();
+	} else {
+		mainWindow.setMenuBarVisibility(false);
+	}
 };
 
 // This method will be called when Electron has finished

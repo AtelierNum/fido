@@ -6,6 +6,9 @@
 	let readmeContent = "";
 	let readmes = {};
 
+	const markdownImageSrc = /!\[\]\(.+\)/gi;//will also match image links
+	const markdownImageLink = /!\[\]\(http.+\)/gi;
+
 	// TODO : make it easier on the eyes
 	const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
 		if (value) {
@@ -27,7 +30,11 @@
 							: 'No readme found in this folder. Is it named "README.md"?'
 					)
 					.then(data => {
-						data = data.replaceAll(/!\[\]\(.+\)/gi, match => {
+						data = data.replaceAll(markdownImageLink, match => 
+							`<img src="${match.slice(4, -1)}">`
+						);
+
+						data = data.replaceAll(markdownImageSrc, match => {
 							return `<img src="https://raw.githubusercontent.com/${value
 								.split("/")
 								.slice(0, 2)

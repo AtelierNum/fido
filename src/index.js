@@ -18,6 +18,8 @@ nativeTheme.themeSource = "light";
 }
 */
 
+require("update-electron-app")();
+
 //TODO maybe have a boolean to ask if we should use a general targetDir or let a user select a targetDir for every download
 const electronStore = new Store({
 	schema: {

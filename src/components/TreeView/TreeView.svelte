@@ -79,12 +79,18 @@
 		display: flex;
 	}
 
+	span:hover{
+		background-color: deepskyblue;
+		border-color: deepskyblue;
+	}
+
 	.expanded {
 		background-image: url(tutorial/icons/folder-open.svg);
 	}
 
 	.focused {
-		background-color: lightsalmon;
+		background-color: cornflowerblue !important;
+		border-color: cornflowerblue !important;
 	}
 
 	ul {
@@ -95,7 +101,8 @@
 	}
 
 	li {
-		padding: 0.2em 0;
+		border: 0.2em 0;
+		border-block-color: white;
 	}
 </style>
 

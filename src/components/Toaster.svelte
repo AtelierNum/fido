@@ -23,6 +23,9 @@
 	}
 
 	#container {
+		position: absolute;
+		top: 4em;
+		right: 20px;
 		box-sizing: border-box;
 		min-height: 50px;
 		background-color: lightblue;
@@ -31,7 +34,7 @@
 </style>
 
 {#if open}
-	<div id="container" transition:fly={{ y: 20 }}>
+	<div id="container" transition:fly={{ x: 100 }}>
 		<div
 			class="closeButton"
 			on:click={() => {

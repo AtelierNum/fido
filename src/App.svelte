@@ -1,26 +1,13 @@
 <script>
 	import { focusedGitHubPath, focusedPathisLeaf, toastMsg } from "./store";
 	import { onMount } from "svelte";
+	import AppBar from "./components/AppBar.svelte";
 	import Repos from "./pages/Repos.svelte";
 	import Toaster from "./components/Toaster.svelte";
 
 	export let ipcRenderer;
 
 	let info = "";
-	let dlTarget;
-	let downloadTargetWatcher = focusedGitHubPath.subscribe(value => {
-		dlTarget = value;
-	});
-
-	function download(contentPath) {
-		ipcRenderer.on("update", onUpdate);
-		ipcRenderer.invoke("download", { path: contentPath });
-	}
-
-	function onUpdate(args) {
-		info = args.info;
-		toastMsg.update(() => "download completed");
-	}
 
 	onMount(async () => {
 		ipcRenderer
@@ -34,6 +21,8 @@
 		max-width: 100%;
 		width: 100%;
 		height: 100%;
+		display: grid;
+		grid-template: auto 1fr / 1fr;
 	}
 
 	.downloadInteraction {
@@ -47,21 +36,16 @@
 </style>
 
 <main>
+	<AppBar {ipcRenderer}/>
 	<Repos />
+	<Toaster />
 	<div class="downloadInteraction">
-		<Toaster />
-		<button
-			disabled={!$focusedPathisLeaf}
-			on:click={() => {
-				download(dlTarget);
-			}}>
-			Download
-		</button>
 		<button
 			on:click={() => {
 				ipcRenderer
 					.invoke('select_target_dir')
 					.then(selectedDir => (info = selectedDir));
-			}}>select download directory</button>
+			}}>select download directory
+		</button>
 	</div>
 </main>

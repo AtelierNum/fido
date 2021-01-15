@@ -18,13 +18,22 @@
 
 <style>
 	span {
-		padding: 0 0 0 1.5em;
-		background: 0 0.1em no-repeat;
+		padding: .5em .5em .5em 2em;
+		background: url(tutorial/icons/folder.svg) 0 0.1em no-repeat;
 		background-size: 1em 1em;
+		font-weight: bold;
+		cursor: pointer;
+		display: flex;
+	}
+
+	span:hover{
+		background-color: deepskyblue;
+		border-color: deepskyblue;
 	}
 
 	.focused {
-		background-color: lightsalmon;
+		background-color: cornflowerblue !important;
+		border-color: cornflowerblue !important;
 	}
 </style>
 

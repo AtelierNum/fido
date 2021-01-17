@@ -11,8 +11,8 @@
 	let pageName = "repos";
 	const pageMap = {
 		repos: Repos,
-		settings : Settings
-	}
+		settings: Settings,
+	};
 </script>
 
 <style>
@@ -26,7 +26,7 @@
 </style>
 
 <main>
-	<AppBar {ipcRenderer} bind:pageName/>
-	<svelte:component this={pageMap[pageName]} {ipcRenderer}/>
+	<AppBar {ipcRenderer} bind:pageName />
+	<svelte:component this={pageMap[pageName]} {ipcRenderer} />
 	<Toaster />
 </main>

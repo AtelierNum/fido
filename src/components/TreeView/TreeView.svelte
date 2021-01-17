@@ -24,9 +24,9 @@
 	const isRootPath = path => path.split("/").length == 1;
 
 	const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
-		if(value === path){
+		if (value === path) {
 			focused = true;
-		}else{
+		} else {
 			focused = false;
 		}
 	});
@@ -48,10 +48,7 @@
 			).json();
 
 			content.forEach(el => {
-				if (
-					el.type == "dir" &&
-					!el.name.toLowerCase().includes("readme_resources")
-				)
+				if (el.type == "dir" && !el.name.toLowerCase().includes("readme_resources"))
 					files.push({ path: path + "/" + el.path.split("/").pop() });
 			});
 
@@ -71,7 +68,7 @@
 
 <style>
 	span {
-		padding: .5em .5em .5em 2em;
+		padding: 0.5em 0.5em 0.5em 2em;
 		background: url(tutorial/icons/folder.svg) 0 0.1em no-repeat;
 		background-size: 1em 1em;
 		font-weight: bold;
@@ -79,7 +76,7 @@
 		display: flex;
 	}
 
-	span:hover{
+	span:hover {
 		background-color: deepskyblue;
 		border-color: deepskyblue;
 	}

@@ -7,5 +7,10 @@
 	"quoteProps": "as-needed",
 	"bracketSpacing": true,
 	"arrowParens": "avoid",
-	"printWidth": 100
+	"printWidth": 100,
+	"svelteSortOrder": "options-scripts-styles-markup",
+	"svelteStrictMode": false,
+	"svelteAllowShorthand": true,
+	"svelteBracketNewLine": true,
+	"svelteIndentScriptAndStyle": true
 }

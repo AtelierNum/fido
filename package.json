@@ -78,6 +78,7 @@
 		"electron-reload": "^1.5.0",
 		"husky": "^4.3.6",
 		"prettier": "2.2.1",
+		"prettier-plugin-svelte": "^2.1.0",
 		"pretty-quick": "^3.1.0",
 		"rollup": "^1.32.0",
 		"rollup-plugin-livereload": "^1.0.0",

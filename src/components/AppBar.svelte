@@ -2,10 +2,12 @@
 	import { focusedGitHubPath, focusedPathisLeaf, toastMsg } from "./../store";
 
 	export let ipcRenderer;
+	export let pageName;
 
 	let info = "";
+	let settingsOpen = false;
 	let dlTarget;
-	let downloadTargetWatcher = focusedGitHubPath.subscribe(value => {
+	let _downloadTargetWatcher = focusedGitHubPath.subscribe(value => {
 		dlTarget = value;
 	});
 
@@ -35,7 +37,8 @@ span{
 }
 </style>
 
-<div id="container">
+<nav id="container">
+	{#if !settingsOpen}
 	<button
 		disabled={!$focusedPathisLeaf}
 		on:click={() => {
@@ -43,6 +46,22 @@ span{
 		}}>
 		Download
 	</button>
+	{/if}
 	<span/>
-	<div>preferences</div>
-</div>
+	<div on:click={() => {
+		if(settingsOpen){
+			pageName = "repos";
+			settingsOpen = false;
+		}else{
+			pageName = "settings";
+			settingsOpen = true;
+		}
+		settingsOpen ? "repos" : "settings"
+		}}>
+		{#if settingsOpen}
+			<div>repos</div>
+		{:else}
+			<div>settings</div>
+		{/if}
+	</div>
+</nav>

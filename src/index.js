@@ -20,12 +20,23 @@ nativeTheme.themeSource = "light";
 
 require("update-electron-app")();
 
-//TODO maybe have a boolean to ask if we should use a general targetDir or let a user select a targetDir for every download
 const electronStore = new Store({
 	schema: {
 		targetDir: {
 			type: "string",
 			default: path.join(app.getPath("documents"), "fido"),
+		},
+		alwaysAskTargetDir: {
+			type: "boolean",
+			default: false,
+		},
+		cacheDownloads: {
+			type: "boolean",
+			default: true,
+		},
+		openInExplorerAfterDownload: {
+			type: "boolean",
+			default: true,
 		},
 	},
 });
@@ -121,4 +132,23 @@ ipcMain.handle("select_target_dir", async (event, args) => {
 
 ipcMain.handle("get_target_dir", () => {
 	return electronStore.get("targetDir");
+});
+
+ipcMain.handle("select_dir", async () => {
+	const selectedDir = (
+		await dialog.showOpenDialog({
+			properties: ["openDirectory", "createDirectory", "promptToCreate", "dontAddToRecent"],
+		})
+	).filePaths[0];
+	return selectedDir;
+});
+
+ipcMain.handle("get_settings", () => {
+	return electronStore.get();
+});
+
+ipcMain.handle("update_settings", (event, args) => {
+	electronStore.set(args.settings);
+	console.dir(event);
+	console.dir(args);
 });

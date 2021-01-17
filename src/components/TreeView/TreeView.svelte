@@ -112,7 +112,7 @@
 </span>
 
 {#if expanded}
-	<ul transition:fly={{ y: -20 }}>
+	<ul transition:fly|local={{ y: -20 }}>
 		{#each files as file}
 			<li>
 				{#if depth < depthLimit || isRootPath(path)}

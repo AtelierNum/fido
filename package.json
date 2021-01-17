@@ -61,6 +61,7 @@
 		"electron-squirrel-startup": "^1.0.0",
 		"electron-store": "^6.0.1",
 		"marked": "^1.2.7",
+		"normalize.css": "^8.0.1",
 		"sirv-cli": "^0.4.4",
 		"update-electron-app": "^2.0.1"
 	},

@@ -23,45 +23,49 @@
 </script>
 
 <style>
-span{
-	flex: 1;
-}
+	span {
+		flex: 1;
+	}
 
-#container {
-	height: 3em;
-	width: 100%;
-	background-color : #555;
-	color: white;
-	display: flex;
-	align-items: center;
-}
+	#container {
+		height: 3em;
+		width: 100%;
+		background-color: #555;
+		color: white;
+		display: flex;
+		align-items: center;
+	}
+
+	.icon {
+		width: 1em;
+	}
 </style>
 
 <nav id="container">
 	{#if !settingsOpen}
-	<button
-		disabled={!$focusedPathisLeaf}
-		on:click={() => {
-			download(dlTarget);
-		}}>
-		Download
-	</button>
+		<button
+			disabled={!$focusedPathisLeaf}
+			on:click={() => {
+				download(dlTarget);
+			}}> Download </button>
 	{/if}
-	<span/>
-	<div on:click={() => {
-		if(settingsOpen){
-			pageName = "repos";
-			settingsOpen = false;
-		}else{
-			pageName = "settings";
-			settingsOpen = true;
-		}
-		settingsOpen ? "repos" : "settings"
-		}}>
+	<span />
+	<div
+		on:click={() => {
+			if (settingsOpen) {
+				pageName = "repos";
+				settingsOpen = false;
+			} else {
+				pageName = "settings";
+				settingsOpen = true;
+			}
+			settingsOpen ? "repos" : "settings";
+		}}
+	>
 		{#if settingsOpen}
-			<div>repos</div>
+			<img src="assets/icons/arrow-left.svg" class="icon" alt="Link to go back" />
 		{:else}
-			<div>settings</div>
+			<img src="assets/icons/cog.svg" class="icon" alt="Link to the settings page" />
 		{/if}
 	</div>
 </nav>

@@ -36,6 +36,10 @@
 		align-items: center;
 	}
 
+	#container > * {
+		padding: 0 1em;
+	}
+
 	.icon {
 		width: 1em;
 	}
@@ -59,7 +63,6 @@
 				pageName = "settings";
 				settingsOpen = true;
 			}
-			settingsOpen ? "repos" : "settings";
 		}}
 	>
 		{#if settingsOpen}

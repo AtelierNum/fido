@@ -34,7 +34,7 @@
 							return `<img src="https://raw.githubusercontent.com/${value
 								.split("/")
 								.slice(0, 2)
-								.join("/")}/main/${match.slice(4, -1)}">`;
+								.join("/")}/main/${value.split("/").slice("2")}/${match.slice(4, -1)}">`;
 						});
 
 						data = data.replaceAll(/\[.+\]\(.+\)/gi, mdLink => {

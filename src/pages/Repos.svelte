@@ -87,7 +87,7 @@
 		<TreeView
 			path="AtelierNum"
 			files={[
-				{ path: "AtelierNum/boilerplates", depthLimit: "3" },
+				{ path: "AtelierNum/templates", depthLimit: "3" },
 				{ path: "AtelierNum/unity_toolkit", depthLimit: "3" },
 			]}
 		/>

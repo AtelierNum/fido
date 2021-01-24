@@ -8,15 +8,6 @@ const fs = require("fs").promises;
 
 //TODO stop forcing light mode once the styling is done
 nativeTheme.themeSource = "light";
-/* here is a bit of CSS to support both for when I'll do the styling, but now I have to catch some Zs
-@media (prefers-color-scheme: dark) {
-	body { background:  #333; color: white; }
-}
-
-@media (prefers-color-scheme: light) {
-	body { background:  #ddd; color: black; }
-}
-*/
 
 require("update-electron-app")();
 

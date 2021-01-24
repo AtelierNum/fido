@@ -28,9 +28,9 @@
 	}
 
 	#container {
-		height: 3em;
+		height: 100%;
 		width: 100%;
-		background-color: #555;
+		background-color: var(--primary-color);
 		color: white;
 		display: flex;
 		align-items: center;

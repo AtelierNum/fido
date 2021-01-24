@@ -21,7 +21,8 @@
 		width: 100%;
 		height: 100%;
 		display: grid;
-		grid-template: auto 1fr / 1fr;
+		/* FIXME make a theme FFS */
+		grid-template: var(--size-7) calc(100% - var(--size-7)) / 100%;
 	}
 </style>
 

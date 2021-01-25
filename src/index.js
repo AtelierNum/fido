@@ -94,8 +94,8 @@ app.on("activate", () => {
 
 ipcMain.handle("download", async (event, { path }) => {
 	const emitter = degit(path + "#main", {
-		cache: true, //TODO maybe leave this up to the user as a checkbox in a preference page
-		force: true, //TODO maybe leave this up to the user as a checkbox in a preference page
+		cache: electronStore.get("cacheDownloads") ?? false,
+		force: true, //TODO set it to false and handle rejection
 		verbose: true,
 	});
 
@@ -103,12 +103,25 @@ ipcMain.handle("download", async (event, { path }) => {
 		event.sender.send("update", { info });
 	});
 
-	const targetPath = electronStore.get("targetDir") + "/" + path.split("/").pop();
+	const targetPath = electronStore.get("alwaysAskTargetDir")
+		? (
+				await dialog.showOpenDialog({
+					properties: [
+						"openDirectory",
+						"createDirectory",
+						"promptToCreate",
+						"dontAddToRecent",
+					],
+				})
+		  )[0]
+		: electronStore.get("targetDir") + "/" + path.split("/").pop();
 	await fs.mkdir(targetPath, { recursive: true });
 	await emitter.clone(targetPath);
 	//TODO : maybe don't open in file explorer right away
 	//maybe show a toast containing a button to allow the opening in file expolrer
-	shell.openPath(targetPath);
+	if (electronStore.get("openInExplorerAfterDownload")) {
+		shell.openPath(targetPath);
+	}
 });
 
 ipcMain.handle("select_target_dir", async (event, args) => {
@@ -140,6 +153,4 @@ ipcMain.handle("get_settings", () => {
 
 ipcMain.handle("update_settings", (event, args) => {
 	electronStore.set(args.settings);
-	console.dir(event);
-	console.dir(args);
 });

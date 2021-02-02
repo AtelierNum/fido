@@ -62,6 +62,10 @@
 		list-style-type: none;
 	}
 
+	#treeview {
+		background-color: var(--paper-2);
+	}
+
 	#readme {
 		height: 100%;
 		width: 100%;
@@ -82,7 +86,7 @@
 </style>
 
 <section>
-	<div>
+	<div id="treeview">
 		<!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
 		<TreeView
 			path="AtelierNum"

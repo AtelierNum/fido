@@ -8,9 +8,9 @@
 	let focused = false;
 
 	const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
-		if(value === path){
+		if (value === path) {
 			focused = true;
-		}else{
+		} else {
 			focused = false;
 		}
 	});
@@ -18,7 +18,7 @@
 
 <style>
 	span {
-		padding: .5em .5em .5em 2em;
+		padding: 0.5em 0.5em 0.5em 2em;
 		background: url(tutorial/icons/folder.svg) 0 0.1em no-repeat;
 		background-size: 1em 1em;
 		font-weight: bold;
@@ -26,14 +26,14 @@
 		display: flex;
 	}
 
-	span:hover{
-		background-color: deepskyblue;
-		border-color: deepskyblue;
+	span:hover {
+		background-color: var(--focus-1);
+		border-color: var(--focus-1);
 	}
 
 	.focused {
-		background-color: cornflowerblue !important;
-		border-color: cornflowerblue !important;
+		background-color: var(--focus-2) !important;
+		border-color: var(--focus-2) !important;
 	}
 </style>
 
@@ -43,4 +43,5 @@
 		focusedGitHubPath.update(() => path);
 		focusedPathisLeaf.update(() => true);
 	}}
-	style="background-image: url(tutorial/icons/{'type'}.svg)">{name}</span>
+	style="background-image: url(tutorial/icons/{'type'}.svg)">{name}</span
+>

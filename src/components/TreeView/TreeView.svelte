@@ -103,9 +103,9 @@
 	}
 </style>
 
-<span class:expanded class:focused>
+<span class:expanded class:focused on:click={selectReadme}>
 	<ToggleExpandButton open={expanded} onclick={toggle} />
-	<div on:click={selectReadme}>{name}</div>
+	<div>{name}</div>
 </span>
 
 {#if expanded}

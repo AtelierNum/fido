@@ -10,6 +10,7 @@
 	});
 
 	const onChange = () => {
+		console.log("settings changed");
 		ipcRenderer.invoke("update_settings", { settings });
 	};
 </script>
@@ -38,6 +39,14 @@
 <div id="container">
 	<section>
 		{#if settings}
+			<fieldset>
+				<label>Theme :</label>
+				<select bind:value={settings.theme} on:change={onChange}>
+					<option value="system">Same as OS</option>
+					<option value="dark">Dark</option>
+					<option value="light">Light</option>
+				</select>
+			</fieldset>
 			<fieldset>
 				<label>Always ask where to download :</label>
 				<input

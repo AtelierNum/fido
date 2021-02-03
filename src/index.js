@@ -6,13 +6,14 @@ const path = require("path");
 const degit = require("degit");
 const fs = require("fs").promises;
 
-//TODO stop forcing light mode once the styling is done
-nativeTheme.themeSource = "light";
-
 require("update-electron-app")();
 
 const electronStore = new Store({
 	schema: {
+		theme: {
+			type: "string",
+			default: "system",
+		},
 		targetDir: {
 			type: "string",
 			default: path.join(app.getPath("documents"), "fido"),
@@ -31,6 +32,8 @@ const electronStore = new Store({
 		},
 	},
 });
+
+nativeTheme.themeSource = electronStore.get("theme");
 
 // Live Reload
 require("electron-reload")(__dirname, {

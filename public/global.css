@@ -7,8 +7,8 @@
 		--focus-1: #33363c;
 		--focus-2: #393c42;
 
-		--color-text: #fff;
-		--color-text-light: #8e8e8a;
+		--color-text: #8e8e8a;
+		--color-text-bold: #fff;
 	}
 }
 
@@ -21,8 +21,8 @@
 		--focus-1: #e8eaed;
 		--focus-2: #d4d7dd;
 
-		--color-text: #060607;
-		--color-text-light: #545650;
+		--color-text: #545650;
+		--color-text-bold: #060607;
 
 		--primary-color: brown;
 	}

@@ -1,4 +1,7 @@
 <script>
+	import Fa from "svelte-fa";
+	import { faCog, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+
 	import { focusedGitHubPath, focusedPathisLeaf, toastMsg } from "./../store";
 
 	export let ipcRenderer;
@@ -31,17 +34,12 @@
 		height: 100%;
 		width: 100%;
 		background-color: var(--paper-3);
-		color: white;
 		display: flex;
 		align-items: center;
 	}
 
 	#container > * {
 		padding: 0 1em;
-	}
-
-	.icon {
-		width: 1em;
 	}
 </style>
 
@@ -66,9 +64,9 @@
 		}}
 	>
 		{#if settingsOpen}
-			<img src="assets/icons/arrow-left.svg" class="icon" alt="Link to go back" />
+			<Fa icon={faArrowLeft} />
 		{:else}
-			<img src="assets/icons/cog.svg" class="icon" alt="Link to the settings page" />
+			<Fa icon={faCog} />
 		{/if}
 	</div>
 </nav>

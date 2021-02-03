@@ -7,7 +7,8 @@
 		--focus-1: #33363c;
 		--focus-2: #393c42;
 
-		--color-text: #8e8e8a;
+		--color-text-light: #8e8e8a;
+		--color-text: #cdc4c4;
 		--color-text-bold: #fff;
 	}
 }
@@ -21,6 +22,7 @@
 		--focus-1: #e8eaed;
 		--focus-2: #d4d7dd;
 
+		--color-text-light: #737880;
 		--color-text: #545650;
 		--color-text-bold: #060607;
 

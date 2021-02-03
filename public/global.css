@@ -47,6 +47,17 @@ html {
 	--size-14: 512px;
 	--size-15: 640px;
 	--size-16: 768px;
+
+	--color-primary: #0d6efd;
+	--color-success: #198754;
+	--color-danger: #dc3545;
+	--color-warning: #ffc823;
+	--color-disabled: var(--paper-2);
+
+	--color-primary-text: #fff;
+	--color-success-text: #fff;
+	--color-danger-text: #fff;
+	--color-primary-warning: #000;
 }
 
 html,

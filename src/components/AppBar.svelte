@@ -13,6 +13,7 @@
 	let _downloadTargetWatcher = focusedGitHubPath.subscribe(value => {
 		dlTarget = value;
 	});
+	let downloadBtnDisabled = !$focusedPathisLeaf;
 
 	function download(contentPath) {
 		ipcRenderer.on("update", onUpdate);
@@ -30,6 +31,27 @@
 		flex: 1;
 	}
 
+	button {
+		display: inline-block;
+		cursor: pointer;
+		color: var(--color-primary-text);
+		background-color: var(--color-primary);
+		border: 1px solid transparent;
+		line-height: 1.5;
+		text-align: center;
+		text-decoration: none;
+		vertical-align: middle;
+		user-select: none;
+		padding: 0.375rem 0.75rem;
+		font-size: 1rem;
+		border-radius: 0.25rem;
+	}
+
+	.disabled {
+		color: var(--color-disabled-text);
+		background-color: var(--color-disabled);
+	}
+
 	#container {
 		height: 100%;
 		width: 100%;
@@ -39,7 +61,7 @@
 	}
 
 	#container > * {
-		padding: 0 1em;
+		margin: 0 1em;
 	}
 </style>
 
@@ -47,6 +69,7 @@
 	{#if !settingsOpen}
 		<button
 			disabled={!$focusedPathisLeaf}
+			class:disabled={!$focusedPathisLeaf}
 			on:click={() => {
 				download(dlTarget);
 			}}> Download </button>

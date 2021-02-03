@@ -50,6 +50,8 @@
 	.disabled {
 		color: var(--color-disabled-text);
 		background-color: var(--color-disabled);
+		border: 1px dashed;
+		border-color: var(--color-disabled-text);
 	}
 
 	#container {

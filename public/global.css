@@ -58,6 +58,7 @@ html {
 	--color-success-text: #fff;
 	--color-danger-text: #fff;
 	--color-primary-warning: #000;
+	--color-disabled-text: var(--color-text-light);
 }
 
 html,

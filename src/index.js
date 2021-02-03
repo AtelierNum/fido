@@ -113,8 +113,9 @@ ipcMain.handle("download", async (event, { path }) => {
 						"dontAddToRecent",
 					],
 				})
-		  )[0]
-		: electronStore.get("targetDir") + "/" + path.split("/").pop();
+		  ).filePaths[0]
+		: electronStore.get("targetDir");
+	targetPath + "/" + path.split("/").pop();
 	await fs.mkdir(targetPath, { recursive: true });
 	await emitter.clone(targetPath);
 	//TODO : maybe don't open in file explorer right away

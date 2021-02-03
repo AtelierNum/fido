@@ -55,18 +55,22 @@
 		height: 100%;
 		display: grid;
 		grid-template: 100% / auto 1fr;
-		grid-gap: 1em;
 	}
 
 	ul {
 		list-style-type: none;
 	}
 
+	#treeview {
+		background-color: var(--paper-2);
+	}
+
 	#readme {
 		height: 100%;
-		width: 100%;
+		width: calc(100% - var(--size-6) * 2);
 		justify-self: center;
 		overflow-y: auto;
+		padding: 0 var(--size-6);
 	}
 
 	/* TODO maybe catch the navigation event when bubbling up then prevent_default and open the link in default browser wtih {shell} = require("electron") */
@@ -82,7 +86,7 @@
 </style>
 
 <section>
-	<div>
+	<div id="treeview">
 		<!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
 		<TreeView
 			path="AtelierNum"

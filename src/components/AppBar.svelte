@@ -30,7 +30,7 @@
 	#container {
 		height: 100%;
 		width: 100%;
-		background-color: var(--primary-color);
+		background-color: var(--paper-3);
 		color: white;
 		display: flex;
 		align-items: center;

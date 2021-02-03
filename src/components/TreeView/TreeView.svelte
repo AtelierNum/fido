@@ -68,7 +68,7 @@
 
 <style>
 	span {
-		padding: 0.5em 0.5em 0.5em 2em;
+		padding: 0.5em;
 		background: url(tutorial/icons/folder.svg) 0 0.1em no-repeat;
 		background-size: 1em 1em;
 		font-weight: bold;
@@ -77,8 +77,8 @@
 	}
 
 	span:hover {
-		background-color: deepskyblue;
-		border-color: deepskyblue;
+		background-color: var(--focus-1);
+		border-color: var(--focus-1);
 	}
 
 	.expanded {
@@ -86,8 +86,8 @@
 	}
 
 	.focused {
-		background-color: cornflowerblue !important;
-		border-color: cornflowerblue !important;
+		background-color: var(--focus-2) !important;
+		border-color: var(--focus-2) !important;
 	}
 
 	ul {
@@ -103,9 +103,9 @@
 	}
 </style>
 
-<span class:expanded class:focused>
+<span class:expanded class:focused on:click={selectReadme}>
 	<ToggleExpandButton open={expanded} onclick={toggle} />
-	<div on:click={selectReadme}>{name}</div>
+	<div>{name}</div>
 </span>
 
 {#if expanded}

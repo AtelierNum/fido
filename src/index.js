@@ -106,7 +106,7 @@ ipcMain.handle("download", async (event, { path }) => {
 		event.sender.send("update", { info });
 	});
 
-	const targetPath = electronStore.get("alwaysAskTargetDir")
+	let targetPath = electronStore.get("alwaysAskTargetDir")
 		? (
 				await dialog.showOpenDialog({
 					properties: [
@@ -118,7 +118,7 @@ ipcMain.handle("download", async (event, { path }) => {
 				})
 		  ).filePaths[0]
 		: electronStore.get("targetDir");
-	targetPath + "/" + path.split("/").pop();
+	targetPath += "/" + path.split("/").pop();
 	await fs.mkdir(targetPath, { recursive: true });
 	await emitter.clone(targetPath);
 	//TODO : maybe don't open in file explorer right away

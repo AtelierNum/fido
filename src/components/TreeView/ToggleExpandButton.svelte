@@ -4,15 +4,19 @@
 </script>
 
 <style>
-	.container{
-		margin-right: 5px;
+	.container {
+		margin: auto 5px auto 0;
 	}
 
 	.open {
 		transform: rotate(90deg);
 	}
+
+	#arrow {
+		font-size: 12px;
+	}
 </style>
 
 <div class:open class="container" on:click={onclick}>
-	<div>&#x25b6</div>
+	<div id="arrow">&#x25b6</div>
 </div>

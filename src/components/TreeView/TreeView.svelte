@@ -48,7 +48,11 @@
 			).json();
 
 			content.forEach(el => {
-				if (el.type == "dir" && !el.name.toLowerCase().includes("readme_resources"))
+				if (
+					el.type == "dir" &&
+					!el.name.toLowerCase().includes("readme_resources") &&
+					!el.name.match(/^_/i)
+				)
 					files.push({ path: path + "/" + el.path.split("/").pop() });
 			});
 

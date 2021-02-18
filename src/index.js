@@ -157,4 +157,5 @@ ipcMain.handle("get_settings", () => {
 
 ipcMain.handle("update_settings", (event, args) => {
 	electronStore.set(args.settings);
+	nativeTheme.themeSource = args.settings.theme;
 });

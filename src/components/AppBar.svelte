@@ -13,7 +13,6 @@
 	let _downloadTargetWatcher = focusedGitHubPath.subscribe(value => {
 		dlTarget = value;
 	});
-	let downloadBtnDisabled = !$focusedPathisLeaf;
 
 	function download(contentPath) {
 		ipcRenderer.on("update", onUpdate);

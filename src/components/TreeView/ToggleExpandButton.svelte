@@ -5,7 +5,7 @@
 
 <style>
 	.container {
-		margin: auto 5px auto 0;
+		margin: auto var(--size-1) auto 0;
 	}
 
 	.open {
@@ -14,6 +14,7 @@
 
 	#arrow {
 		font-size: 12px;
+		padding: var(--size-1);
 	}
 </style>
 

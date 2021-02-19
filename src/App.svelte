@@ -1,5 +1,4 @@
 <script>
-	import { onMount } from "svelte";
 	import AppBar from "./components/AppBar.svelte";
 	import Toaster from "./components/Toaster.svelte";
 
@@ -21,7 +20,6 @@
 		width: 100%;
 		height: 100%;
 		display: grid;
-		/* FIXME make a theme FFS */
 		grid-template: var(--size-7) calc(100% - var(--size-7)) / 100%;
 	}
 </style>

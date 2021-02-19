@@ -96,35 +96,42 @@ app.on("activate", () => {
 // code. You can also put them in separate files and import them here.
 
 ipcMain.handle("download", async (event, { path }) => {
-	const emitter = degit(path + "#main", {
-		cache: electronStore.get("cacheDownloads") ?? false,
-		force: true, //TODO set it to false and handle rejection
-		verbose: true,
-	});
+	try {
+		const emitter = degit(path + "#main", {
+			cache: electronStore.get("cacheDownloads") ?? false,
+			force: true, //TODO set it to false and handle rejection
+			verbose: true,
+		});
 
-	emitter.on("info", info => {
-		event.sender.send("update", { info });
-	});
+		emitter.on("info", info => {
+			event.sender.send("update", { info });
+		});
 
-	let targetPath = electronStore.get("alwaysAskTargetDir")
-		? (
-				await dialog.showOpenDialog({
-					properties: [
-						"openDirectory",
-						"createDirectory",
-						"promptToCreate",
-						"dontAddToRecent",
-					],
-				})
-		  ).filePaths[0]
-		: electronStore.get("targetDir");
-	targetPath += "/" + path.split("/").pop();
-	await fs.mkdir(targetPath, { recursive: true });
-	await emitter.clone(targetPath);
-	//TODO : maybe don't open in file explorer right away
-	//maybe show a toast containing a button to allow the opening in file expolrer
-	if (electronStore.get("openInExplorerAfterDownload")) {
-		shell.openPath(targetPath);
+		let targetPath = electronStore.get("alwaysAskTargetDir")
+			? (
+					await dialog.showOpenDialog({
+						properties: [
+							"openDirectory",
+							"createDirectory",
+							"promptToCreate",
+							"dontAddToRecent",
+						],
+					})
+			  ).filePaths[0]
+			: electronStore.get("targetDir");
+		targetPath += "/" + path.split("/").pop();
+		await fs.mkdir(targetPath, { recursive: true });
+		await emitter.clone(targetPath);
+		//TODO : maybe don't open in file explorer right away
+		//maybe show a toast containing a button to allow the opening in file expolrer
+		if (electronStore.get("openInExplorerAfterDownload")) {
+			shell.openPath(targetPath);
+		}
+
+		return true;
+	} catch (e) {
+		console.error(e);
+		return false;
 	}
 });
 

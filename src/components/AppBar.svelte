@@ -2,7 +2,7 @@
 	import Fa from "svelte-fa";
 	import { faCog, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-	import { focusedGitHubPath, focusedPathisLeaf, toastMsg } from "./../store";
+	import { focusedGitHubPath, focusedPathisLeaf, addToast } from "./../store";
 
 	export let ipcRenderer;
 	export let pageName;
@@ -15,13 +15,18 @@
 	});
 
 	function download(contentPath) {
-		ipcRenderer.on("update", onUpdate);
-		ipcRenderer.invoke("download", { path: contentPath });
-	}
-
-	function onUpdate(args) {
-		info = args.info;
-		toastMsg.update(() => "download completed");
+		ipcRenderer.on("update", data => console.log("update: ", data));
+		ipcRenderer.invoke("download", { path: contentPath }).then(isSuccess =>
+			isSuccess
+				? addToast({
+						type: "success",
+						message: "download completed",
+				  })
+				: addToast({
+						type: "error",
+						message: "it failed",
+				  })
+		);
 	}
 </script>
 

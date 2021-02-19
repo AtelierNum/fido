@@ -1,6 +1,6 @@
 <script>
 	import AppBar from "./components/AppBar.svelte";
-	import Toaster from "./components/Toaster.svelte";
+	import Toaster from "./components/Toaster/Toaster.svelte";
 
 	import Repos from "./pages/Repos.svelte";
 	import Settings from "./pages/Settings.svelte";

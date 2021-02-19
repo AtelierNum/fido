@@ -64,6 +64,7 @@
 	#treeview {
 		background-color: var(--paper-2);
 		padding: 0.5em;
+		overflow-y: auto;
 	}
 
 	#readme {

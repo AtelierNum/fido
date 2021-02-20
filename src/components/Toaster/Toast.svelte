@@ -13,7 +13,7 @@
 	export let type = "";
 	export let message = "";
 
-	const timeToLive = 4000;
+	const timeToLive = 5000;
 
 	const timerProgress = tweened(100, {
 		duration: timeToLive,
@@ -61,13 +61,13 @@
 		flex-direction: column;
 		box-sizing: border-box;
 		min-height: 50px;
-		padding: var(--size-4);
+		padding: var(--size-3);
 		user-select: none;
 	}
 
 	#timer {
-		background-color: black;
-		height: var(--size-1);
+		backdrop-filter: saturate(50%);
+		height: var(--size-2);
 	}
 </style>
 
@@ -77,7 +77,7 @@
 		<div id="head">
 			<div id="title">{head}</div>
 			<span />
-			<div id="closeButton" on:click={close}>
+			<div on:click={close}>
 				<Fa icon={faTimes} />
 			</div>
 		</div>

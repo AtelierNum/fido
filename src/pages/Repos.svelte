@@ -3,11 +3,14 @@
 	import { focusedGitHubPath } from "../store";
 	import TreeView from "../components/TreeView/TreeView.svelte";
 
+	export let ipcRenderer;
+
 	let readmeContent = "";
 	let readmes = {};
 
 	const markdownImageSrc = /!\[\]\(.+\)/gi; //will also match image links
 	const markdownImageLink = /!\[\]\(http.+\)/gi;
+	const validUrl = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
 	// TODO : make it easier on the eyes
 	const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
@@ -47,6 +50,15 @@
 			}
 		}
 	});
+
+	function redirectLinkInBrowser(event) {
+		if (event.path[0].nodeName == "A") {
+			const link = event.target.href.match(validUrl)[0];
+			if (link.trim() !== "") {
+				ipcRenderer.invoke("open_link", { link: event.target.href });
+			}
+		}
+	}
 </script>
 
 <style>
@@ -55,10 +67,6 @@
 		height: 100%;
 		display: grid;
 		grid-template: 100% / auto 1fr;
-	}
-
-	ul {
-		list-style-type: none;
 	}
 
 	#treeview {
@@ -73,13 +81,6 @@
 		justify-self: center;
 		overflow-y: auto;
 		padding: 0 var(--size-6);
-	}
-
-	/* TODO maybe catch the navigation event when bubbling up then prevent_default and open the link in default browser wtih {shell} = require("electron") */
-	:global(#readme a) {
-		color: inherit;
-		text-decoration: none;
-		pointer-events: none;
 	}
 
 	:global(#readme img) {
@@ -98,7 +99,7 @@
 			]}
 		/>
 	</div>
-	<div id="readme" on:click|preventDefault>
+	<div id="readme" on:click|preventDefault={redirectLinkInBrowser}>
 		{@html readmeContent}
 	</div>
 </section>

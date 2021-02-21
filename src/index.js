@@ -166,3 +166,7 @@ ipcMain.handle("update_settings", (event, args) => {
 	electronStore.set(args.settings);
 	nativeTheme.themeSource = args.settings.theme;
 });
+
+ipcMain.handle("open_link", (event, args) => {
+	shell.openExternal(args.link);
+});

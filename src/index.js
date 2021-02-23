@@ -131,10 +131,10 @@ ipcMain.handle("download", async (event, { path }) => {
 			shell.openPath(targetPath);
 		}
 
-		return true;
+		return null;
 	} catch (e) {
 		console.error(e);
-		return false;
+		return e;
 	}
 });
 

@@ -21,8 +21,10 @@
 	});
 
 	onMount(() => {
-		timerProgress.set(0);
-		setTimeout(close, timeToLive);
+		if (type != "error") {
+			timerProgress.set(0);
+			setTimeout(close, timeToLive);
+		}
 	});
 
 	function close() {

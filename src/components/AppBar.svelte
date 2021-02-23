@@ -16,15 +16,15 @@
 
 	function download(contentPath) {
 		ipcRenderer.on("update", data => console.log("update: ", data));
-		ipcRenderer.invoke("download", { path: contentPath }).then(isSuccess =>
-			isSuccess
+		ipcRenderer.invoke("download", { path: contentPath }).then(err =>
+			err
 				? addToast({
-						type: "success",
-						message: "download completed",
+						type: "error",
+						message: err,
 				  })
 				: addToast({
-						type: "error",
-						message: "it failed",
+						type: "success",
+						message: "download completed",
 				  })
 		);
 	}

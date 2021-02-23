@@ -1,23 +1,13 @@
-# Electron Forge + Svelte  Starter
+# Fido
 
-Get up and running with 💪 Svelte & ⚡ Electron. 
+He do be fetchin'
 
-## Usage
+## Motivation
 
-```
-git clone https://github.com/codediodeio/electron-forge-svelte.git my-app
-cd my-app
+This project is a compagnion to our [templates repo](https://github.com/AtelierNum/templates).
 
-npm install
-npm start
-```
+The github ecosytem (and more broadly, git) is a great tool for collaboration but also a barrier for anyone not aquainted with it.
 
-![svelte electron](https://firebasestorage.googleapis.com/v0/b/fireship-app.appspot.com/o/assets%2Felectron-svelte-hello.png?alt=media&token=0d3ecb24-3024-4358-ac26-7676b3e60fa1)
+So this tool aim to let anyone browse then download the template they need.
 
-## Notes
-
-- src/index.js - Main electron process. 
-- src/svelte.js - Svelte app entrypoint. 
-
-Setup [Electron with Svelte](https://fireship.io/snippets/svelte-electron-setup) from scratch. 
-Build cool projects with [Electron](https://fireship.io/tags/electron). 
+![](/docs/screenshot.png)

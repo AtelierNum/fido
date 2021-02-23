@@ -4,7 +4,7 @@ const { autoUpdater } = require("electron-updater");
 const isDev = require("electron-is-dev");
 const Store = require("electron-store");
 const path = require("path");
-const degit = require("degit");
+const degit = require("tiged");
 const fs = require("fs").promises;
 
 autoUpdater.checkForUpdatesAndNotify();
@@ -100,7 +100,7 @@ app.on("activate", () => {
 
 ipcMain.handle("download", async (event, { path }) => {
 	try {
-		const emitter = degit(path + "#main", {
+		const emitter = degit(path, {
 			cache: electronStore.get("cacheDownloads") ?? false,
 			force: true, //TODO set it to false and handle rejection
 			verbose: true,

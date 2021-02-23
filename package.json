@@ -44,7 +44,6 @@
 	},
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^5.15.2",
-		"degit": "^2.8.0",
 		"electron-is-dev": "^1.2.0",
 		"electron-squirrel-startup": "^1.0.0",
 		"electron-store": "^6.0.1",
@@ -53,6 +52,7 @@
 		"normalize.css": "^8.0.1",
 		"sirv-cli": "^0.4.4",
 		"svelte-fa": "^2.2.0",
+		"tiged": "^2.9.5",
 		"update-electron-app": "^2.0.1"
 	},
 	"devDependencies": {

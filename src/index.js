@@ -1,12 +1,13 @@
 //TODO : contemplate if we can open the freshly downloaded folder into vscode instead of openning it in the file browser (maybe leave it up to the user between none or these two)
 const { app, BrowserWindow, ipcMain, dialog, shell, nativeTheme } = require("electron");
+const { autoUpdater } = require("electron-updater");
 const isDev = require("electron-is-dev");
 const Store = require("electron-store");
 const path = require("path");
 const degit = require("degit");
 const fs = require("fs").promises;
 
-require("update-electron-app")();
+autoUpdater.checkForUpdatesAndNotify();
 
 const electronStore = new Store({
 	schema: {
@@ -35,11 +36,13 @@ const electronStore = new Store({
 
 nativeTheme.themeSource = electronStore.get("theme");
 
-// Live Reload
-require("electron-reload")(__dirname, {
-	electron: path.join(__dirname, "../node_modules", ".bin", "electron"),
-	awaitWriteFinish: true,
-});
+if (isDev) {
+	// Live Reload
+	require("electron-reload")(__dirname, {
+		electron: path.join(__dirname, "../node_modules", ".bin", "electron"),
+		awaitWriteFinish: true,
+	});
+}
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {

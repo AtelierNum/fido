@@ -13,9 +13,8 @@
 	"main": "src/index.js",
 	"scripts": {
 		"start": "concurrently \"npm:svelte-dev\" \"electron-forge start\"",
-		"package": "electron-forge package",
-		"make": "electron-forge make",
-		"publish": "electron-forge publish",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder",
 		"lint": "echo \"No linting configured\"",
 		"svelte-build": "rollup -c",
 		"svelte-dev": "rollup -c -w",
@@ -28,31 +27,19 @@
 	},
 	"keywords": [],
 	"license": "MIT",
-	"config": {
-		"forge": {
-			"packagerConfig": {},
-			"makers": [
-				{
-					"name": "@electron-forge/maker-squirrel",
-					"config": {
-						"name": "fido"
-					}
-				},
-				{
-					"name": "@electron-forge/maker-zip",
-					"platforms": [
-						"darwin"
-					]
-				},
-				{
-					"name": "@electron-forge/maker-deb",
-					"config": {}
-				},
-				{
-					"name": "@electron-forge/maker-rpm",
-					"config": {}
-				}
-			]
+	"build": {
+		"appId": "com.lecolededesign.fido",
+		"files": [
+			"package.json",
+			"public/**/*",
+			"src/index.js",
+			"node_modules/**/*"
+		],
+		"mac": {
+			"target": "dmg"
+		},
+		"win": {
+			"target": "nsis"
 		}
 	},
 	"dependencies": {
@@ -61,6 +48,7 @@
 		"electron-is-dev": "^1.2.0",
 		"electron-squirrel-startup": "^1.0.0",
 		"electron-store": "^6.0.1",
+		"electron-updater": "^4.3.5",
 		"marked": "^1.2.7",
 		"normalize.css": "^8.0.1",
 		"sirv-cli": "^0.4.4",
@@ -69,14 +57,11 @@
 	},
 	"devDependencies": {
 		"@electron-forge/cli": "^6.0.0-beta.54",
-		"@electron-forge/maker-deb": "^6.0.0-beta.54",
-		"@electron-forge/maker-rpm": "^6.0.0-beta.54",
-		"@electron-forge/maker-squirrel": "^6.0.0-beta.54",
-		"@electron-forge/maker-zip": "^6.0.0-beta.54",
 		"@rollup/plugin-commonjs": "^11.0.0",
 		"@rollup/plugin-node-resolve": "^7.0.0",
 		"concurrently": "^5.1.0",
 		"electron": "^11.1.1",
+		"electron-builder": "^22.9.1",
 		"electron-reload": "^1.5.0",
 		"husky": "^4.3.6",
 		"prettier": "2.2.1",

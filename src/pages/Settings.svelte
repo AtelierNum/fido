@@ -75,10 +75,6 @@
 					on:change={onChange}
 				/>
 			</fieldset>
-			<fieldset>
-				<label>Cache downloads :</label>
-				<input type="checkbox" bind:checked={settings.cacheDownloads} on:change={onChange} />
-			</fieldset>
 		{/if}
 	</section>
 </div>

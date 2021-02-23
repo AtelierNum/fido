@@ -23,10 +23,6 @@ const electronStore = new Store({
 			type: "boolean",
 			default: false,
 		},
-		cacheDownloads: {
-			type: "boolean",
-			default: true,
-		},
 		openInExplorerAfterDownload: {
 			type: "boolean",
 			default: true,
@@ -101,7 +97,7 @@ app.on("activate", () => {
 ipcMain.handle("download", async (event, { path }) => {
 	try {
 		const emitter = degit(path, {
-			cache: electronStore.get("cacheDownloads") ?? false,
+			cache: false,
 			force: true, //TODO set it to false and handle rejection
 			verbose: true,
 		});

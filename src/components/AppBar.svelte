@@ -1,23 +1,40 @@
 <script>
 	import Fa from "svelte-fa";
 	import { faCog, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+	import { tweened } from "svelte/motion";
+	import { cubicInOut } from "svelte/easing";
 
 	import { focusedGitHubPath, focusedPathisLeaf, addToast } from "./../store";
 
 	export let ipcRenderer;
 	export let pageName;
 
+	let downloading = false;
 	let info = "";
 	let settingsOpen = false;
 	let dlTarget;
 	let _downloadTargetWatcher = focusedGitHubPath.subscribe(value => {
 		dlTarget = value;
 	});
+	const downloadSteps = 4;
+	let dlProgress = 0;
+	const progressWidth = tweened(0, {
+		duration: 400,
+		easing: cubicInOut,
+	});
 
 	function download(contentPath) {
-		ipcRenderer.on("update", data => console.log("update: ", data));
-		ipcRenderer.invoke("download", { path: contentPath }).then(err =>
-			err
+		downloading = true;
+		ipcRenderer.on("update", data => {
+			dlProgress += 100 / downloadSteps;
+			updateProgressBar();
+			console.log("update: ", data);
+		});
+		ipcRenderer.invoke("download", { path: contentPath }).then(err => {
+			downloading = false;
+			dlProgress = 0;
+			updateProgressBar();
+			return err
 				? addToast({
 						type: "error",
 						message: err,
@@ -25,8 +42,12 @@
 				: addToast({
 						type: "success",
 						message: "download completed",
-				  })
-		);
+				  });
+		});
+	}
+
+	function updateProgressBar() {
+		progressWidth.set(dlProgress);
 	}
 </script>
 
@@ -59,6 +80,10 @@
 	}
 
 	#container {
+		z-index: 2;
+	}
+
+	#bar {
 		height: 100%;
 		width: 100%;
 		background-color: var(--paper-3);
@@ -66,36 +91,46 @@
 		align-items: center;
 	}
 
-	#container > * {
+	#bar > * {
 		margin: 0 1em;
+	}
+
+	#progress {
+		height: var(--size-1);
+		background-color: var(--color-primary);
 	}
 </style>
 
-<nav id="container">
-	{#if !settingsOpen}
-		<button
-			disabled={!$focusedPathisLeaf}
-			class:disabled={!$focusedPathisLeaf}
-			on:click={() => {
-				download(dlTarget);
-			}}> Download </button>
-	{/if}
-	<span />
-	<div
-		on:click={() => {
-			if (settingsOpen) {
-				pageName = "repos";
-				settingsOpen = false;
-			} else {
-				pageName = "settings";
-				settingsOpen = true;
-			}
-		}}
-	>
-		{#if settingsOpen}
-			<Fa icon={faArrowLeft} />
-		{:else}
-			<Fa icon={faCog} />
+<div id="container">
+	<nav id="bar">
+		{#if !settingsOpen}
+			<button
+				disabled={!$focusedPathisLeaf || downloading}
+				class:disabled={!$focusedPathisLeaf || downloading}
+				on:click={() => {
+					download(dlTarget);
+				}}> Download </button>
 		{/if}
-	</div>
-</nav>
+		<span />
+		<div
+			on:click={() => {
+				if (settingsOpen) {
+					pageName = "repos";
+					settingsOpen = false;
+				} else {
+					pageName = "settings";
+					settingsOpen = true;
+				}
+			}}
+		>
+			{#if settingsOpen}
+				<Fa icon={faArrowLeft} />
+			{:else}
+				<Fa icon={faCog} />
+			{/if}
+		</div>
+	</nav>
+	{#if downloading}
+		<div id="progress" style={`width:${$progressWidth}%`} />
+	{/if}
+</div>

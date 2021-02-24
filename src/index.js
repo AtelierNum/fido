@@ -103,6 +103,7 @@ ipcMain.handle("download", async (event, { path }) => {
 		});
 
 		emitter.on("info", info => {
+			console.log(info);
 			event.sender.send("update", { info });
 		});
 

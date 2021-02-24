@@ -74,7 +74,9 @@
 </style>
 
 <div id="container" class={type} transition:fly={{ x: 100, duration: 300 }}>
-	<div id="timer" style={`width:${$timerProgress}%;`} />
+	{#if type != "error"}
+		<div id="timer" style={`width:${$timerProgress}%;`} />
+	{/if}
 	<div id="toast">
 		<div id="head">
 			<div id="title">{head}</div>

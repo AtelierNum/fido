@@ -1,13 +1,12 @@
 //TODO : contemplate if we can open the freshly downloaded folder into vscode instead of openning it in the file browser (maybe leave it up to the user between none or these two)
 const { app, BrowserWindow, ipcMain, dialog, shell, nativeTheme } = require("electron");
-const { autoUpdater } = require("electron-updater");
 const isDev = require("electron-is-dev");
 const Store = require("electron-store");
 const path = require("path");
 const degit = require("tiged");
 const fs = require("fs").promises;
 
-autoUpdater.checkForUpdatesAndNotify();
+//require("electron-updater").autoUpdater.checkForUpdatesAndNotify();
 
 const electronStore = new Store({
 	schema: {

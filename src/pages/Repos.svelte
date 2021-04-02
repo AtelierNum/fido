@@ -34,10 +34,15 @@
 						);
 
 						data = data.replaceAll(markdownImageSrc, match => {
+							console.log(value.split("/").slice("2"));
+							console.log(match.slice(4, -1));
 							return `<img src="https://raw.githubusercontent.com/${value
 								.split("/")
 								.slice(0, 2)
-								.join("/")}/main/${value.split("/").slice("2")}/${match.slice(4, -1)}">`;
+								.join("/")}/main/${value.split("/").slice("2").join("/")}/${match.slice(
+								4,
+								-1
+							)}">`;
 						});
 
 						data = data.replaceAll(/\[.+\]\(.+\)/gi, mdLink => {

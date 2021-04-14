@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain, dialog, shell, nativeTheme } = require("ele
 const isDev = require("electron-is-dev");
 const Store = require("electron-store");
 const path = require("path");
-const degit = require("tiged");
+const degit = require("degitdegit");
 const fs = require("fs").promises;
 
 //require("electron-updater").autoUpdater.checkForUpdatesAndNotify();
@@ -102,7 +102,6 @@ ipcMain.handle("download", async (event, { path }) => {
 		});
 
 		emitter.on("info", info => {
-			console.log(info);
 			event.sender.send("update", { info });
 		});
 

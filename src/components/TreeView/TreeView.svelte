@@ -107,8 +107,14 @@
 	}
 </style>
 
-<span class:expanded class:focused on:click={selectReadme}>
-	<ToggleExpandButton open={expanded} onclick={toggle} />
+<span
+	class:expanded
+	class:focused
+	on:click={() => {
+		selectReadme();
+		toggle();
+	}}>
+	<ToggleExpandButton open={expanded} />
 	<div>{name}</div>
 </span>
 

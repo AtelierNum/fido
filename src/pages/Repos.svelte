@@ -90,6 +90,7 @@
 		justify-self: center;
 		overflow-y: auto;
 		padding: 0 var(--size-6);
+		color: var(--color-text-bold);
 	}
 
 	:global(#readme img) {

@@ -72,6 +72,11 @@
 		border-radius: 0.25rem;
 	}
 
+	button.secondary {
+		color: var(--color-text);
+		background-color: transparent;
+	}
+
 	.disabled {
 		color: var(--color-disabled-text);
 		background-color: var(--color-disabled);
@@ -112,7 +117,8 @@
 				}}> Download </button>
 		{/if}
 		<span />
-		<div
+		<button
+			class="secondary"
 			on:click={() => {
 				if (settingsOpen) {
 					pageName = "repos";
@@ -121,14 +127,13 @@
 					pageName = "settings";
 					settingsOpen = true;
 				}
-			}}
-		>
+			}}>
 			{#if settingsOpen}
 				<Fa icon={faArrowLeft} />
 			{:else}
 				<Fa icon={faCog} />
 			{/if}
-		</div>
+		</button>
 	</nav>
 	{#if downloading}
 		<div id="progress" style={`width:${$progressWidth}%`} />

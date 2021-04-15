@@ -5,8 +5,14 @@
 
 	export let ipcRenderer;
 
-	let readmeContent = "";
-	let readmes = {};
+	let readmes = { AtelierNum: "<span/>" };
+	let readmeContent = Object.values(readmes)[0];
+
+	const noReadmeMessage = `
+	<div style="height:100%;width:100%;display:flex;align-items:center;justify-content:center">
+		<p style="font-size:2rem">There is no document for this section</p>
+	</div>
+	`;
 
 	const markdownImageSrc = /!\[\]\(.+\)/gi; //will also match image links
 	const markdownImageLink = /!\[\]\(http.+\)/gi;
@@ -24,9 +30,7 @@
 						.slice(0, 2)
 						.join("/")}/main/${value.split("/").slice(2).join("/")}/README.md`
 				)
-					.then(res =>
-						res.ok ? res.text() : 'No readme found in this folder. Is it named "README.md"?'
-					)
+					.then(res => (res.ok ? res.text() : ""))
 					.then(data => {
 						data = data.replaceAll(
 							markdownImageLink,
@@ -105,6 +109,6 @@
 		/>
 	</div>
 	<div id="readme" on:click|preventDefault={redirectLinkInBrowser}>
-		{@html readmeContent}
+		{@html readmeContent ? readmeContent : noReadmeMessage}
 	</div>
 </section>

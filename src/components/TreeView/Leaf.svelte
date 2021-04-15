@@ -34,6 +34,7 @@
 	.focused {
 		background-color: var(--focus-2) !important;
 		border-color: var(--focus-2) !important;
+		color: var(--color-text-bold);
 	}
 </style>
 

@@ -17,6 +17,7 @@
 	let loading = false;
 	let loaded = false;
 	let focused = false;
+	let selected = false;
 
 	$: name = path.split("/").pop() || "missing name";
 	$: depth = path.split("/").length;
@@ -24,11 +25,13 @@
 	const isRootPath = path => path.split("/").length == 1;
 
 	const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
-		if (value === path) {
+		if (typeof value == "string" && value.includes(path)) {
 			focused = true;
 		} else {
 			focused = false;
 		}
+
+		selected = path === value;
 	});
 
 	async function toggle() {
@@ -90,6 +93,11 @@
 	}
 
 	.focused {
+		color: var(--color-text-bold);
+		font-weight: bold;
+	}
+
+	.selected {
 		background-color: var(--focus-2) !important;
 		border-color: var(--focus-2) !important;
 	}
@@ -110,6 +118,7 @@
 <span
 	class:expanded
 	class:focused
+	class:selected
 	on:click={() => {
 		selectReadme();
 		toggle();

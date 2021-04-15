@@ -25,12 +25,7 @@
 	const isRootPath = path => path.split("/").length == 1;
 
 	const watcherFocusedGitHubPath = focusedGitHubPath.subscribe(value => {
-		if (typeof value == "string" && value.includes(path)) {
-			focused = true;
-		} else {
-			focused = false;
-		}
-
+		focused = typeof value == "string" && value.includes(path);
 		selected = path === value;
 	});
 

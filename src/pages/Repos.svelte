@@ -80,7 +80,7 @@
 
 	#treeview {
 		background-color: var(--paper-2);
-		padding: 0.5em;
+		padding: 0.5em 0.5em 10em 0.5em;
 		overflow-y: auto;
 	}
 

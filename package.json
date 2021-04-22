@@ -50,7 +50,7 @@
 		"electron-store": "^6.0.1",
 		"electron-updater": "^4.3.5",
 		"highlight.js": "^10.7.2",
-		"marked": "^1.2.7",
+		"marked": "^2.0.0",
 		"normalize.css": "^8.0.1",
 		"sirv-cli": "^0.4.4",
 		"svelte-fa": "^2.2.0",

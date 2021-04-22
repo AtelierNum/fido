@@ -131,3 +131,9 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
+
+pre code {
+	padding: var(--size-4);
+	border: var(--color-text) 1px solid;
+	border-radius: var(--size-1);
+}

@@ -49,6 +49,7 @@
 		"electron-squirrel-startup": "^1.0.0",
 		"electron-store": "^6.0.1",
 		"electron-updater": "^4.3.5",
+		"highlight.js": "^10.7.2",
 		"marked": "^1.2.7",
 		"normalize.css": "^8.0.1",
 		"sirv-cli": "^0.4.4",

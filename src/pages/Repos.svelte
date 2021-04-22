@@ -1,6 +1,9 @@
 <script>
 	import marked from "marked";
 	import { focusedGitHubPath } from "../store";
+	import { afterUpdate } from "svelte";
+	import hljs from "highlight.js";
+
 	import TreeView from "../components/TreeView/TreeView.svelte";
 
 	export let ipcRenderer;
@@ -38,8 +41,6 @@
 						);
 
 						data = data.replaceAll(markdownImageSrc, match => {
-							console.log(value.split("/").slice("2"));
-							console.log(match.slice(4, -1));
 							return `<img src="https://raw.githubusercontent.com/${value
 								.split("/")
 								.slice(0, 2)
@@ -68,6 +69,12 @@
 			}
 		}
 	}
+
+	afterUpdate(() => {
+		document.querySelectorAll("pre code").forEach(block => {
+			hljs.highlightBlock(block);
+		});
+	});
 </script>
 
 <style>

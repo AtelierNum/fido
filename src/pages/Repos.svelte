@@ -9,6 +9,7 @@
 	export let ipcRenderer;
 
 	let readmes = { AtelierNum: "<span/>" };
+	let readmeElement;
 	let readmeContent = Object.values(readmes)[0];
 
 	const noReadmeMessage = `
@@ -71,7 +72,7 @@
 	}
 
 	afterUpdate(() => {
-		document.querySelectorAll("pre code").forEach(block => {
+		readmeElement.querySelectorAll("pre code").forEach(block => {
 			hljs.highlightBlock(block);
 		});
 	});
@@ -116,7 +117,7 @@
 			]}
 		/>
 	</div>
-	<div id="readme" on:click|preventDefault={redirectLinkInBrowser}>
+	<div id="readme" bind:this={readmeElement} on:click|preventDefault={redirectLinkInBrowser}>
 		{@html readmeContent ? readmeContent : noReadmeMessage}
 	</div>
 </section>

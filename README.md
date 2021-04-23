@@ -1,5 +1,7 @@
 # Fido
 
+![poor code quality, but it's chill](https://img.shields.io/badge/code%20quality-ROFL-red)
+
 He do be fetchin'
 
 ## Motivation

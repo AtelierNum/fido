@@ -94,10 +94,16 @@
 	#readme {
 		height: 100%;
 		width: calc(100% - var(--size-6) * 2);
-		justify-self: center;
-		overflow-y: auto;
+		max-width: 65em;/*~15 words*/
 		padding: 0 var(--size-6);
 		color: var(--color-text-bold);
+	}
+
+	#readme-container{
+		width:100%;
+		overflow-y:auto;
+		display:flex;
+		justify-content: center;
 	}
 
 	:global(#readme img) {
@@ -116,7 +122,9 @@
 			]}
 		/>
 	</div>
-	<div id="readme" on:click|preventDefault={redirectLinkInBrowser}>
-		{@html readmeContent ? readmeContent : noReadmeMessage}
+	<div id="readme-container">
+		<div id="readme" on:click|preventDefault={redirectLinkInBrowser}>
+			{@html readmeContent ? readmeContent : noReadmeMessage}
+		</div>
 	</div>
 </section>

@@ -10,6 +10,7 @@
 	export let ipcRenderer;
 
 	let readmes = { AtelierNum: "<span/>" };
+	let readmeElement;
 	let readmeContent = Object.values(readmes)[0];
 	let treeView; //the dom node
 	let showTree = true;
@@ -75,7 +76,7 @@
 	}
 
 	afterUpdate(() => {
-		document.querySelectorAll("pre code").forEach(block => {
+		readmeElement.querySelectorAll("pre code").forEach(block => {
 			hljs.highlightBlock(block);
 		});
 	});

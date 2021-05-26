@@ -26,3 +26,22 @@ export const addToast = toast => {
 export const removeToastById = id => {
 	toasts.update(toasts => toasts.filter(e => e.id != id));
 };
+
+export const fileTree = writable({
+	path: "AtelierNum",
+	expanded: true,
+	children: [
+		{
+			path: "AtelierNum/templates",
+			expanded: false,
+			children: null,
+			depthLimit: "3",
+		},
+		{
+			path: "AtelierNum/unity_toolkit",
+			expanded: false,
+			children: null,
+			depthLimit: "3",
+		},
+	],
+});

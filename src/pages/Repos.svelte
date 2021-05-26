@@ -1,7 +1,8 @@
 <script>
 	import marked from "marked";
-	import { focusedGitHubPath } from "../store";
+	import { focusedGitHubPath, fileTree } from "../store";
 	import { afterUpdate } from "svelte";
+	import { fly } from "svelte/transition";
 	import hljs from "highlight.js";
 
 	import TreeView from "../components/TreeView/TreeView.svelte";
@@ -10,6 +11,9 @@
 
 	let readmes = { AtelierNum: "<span/>" };
 	let readmeContent = Object.values(readmes)[0];
+	let treeView; //the dom node
+	let showTree = true;
+	const typicalScrollBarWidth = 30;
 
 	const noReadmeMessage = `
 	<div style="height:100%;width:100%;display:flex;align-items:center;justify-content:center">
@@ -82,7 +86,30 @@
 		width: 100%;
 		height: 100%;
 		display: grid;
-		grid-template: 100% / auto 1fr;
+		grid-template:
+			"treeview readme" 100%
+			/ auto 1fr;
+	}
+
+	button {
+		width: 40px;
+		height: 40px;
+		margin: 20px;
+		background-color: transparent;
+		border: none;
+		color: var(--color-primary-text);
+		font-weight: bold;
+	}
+
+	button:focus {
+		background-color: transparent;
+		border: none;
+	}
+
+	#close-btn {
+		position: relative;
+		top: 10px;
+		left: 10px;
 	}
 
 	#treeview {
@@ -94,15 +121,15 @@
 	#readme {
 		height: 100%;
 		width: calc(100% - var(--size-6) * 2);
-		max-width: 65em;/*~15 words*/
+		max-width: 65em; /*~15 words*/
 		padding: 0 var(--size-6);
 		color: var(--color-text-bold);
 	}
 
-	#readme-container{
-		width:100%;
-		overflow-y:auto;
-		display:flex;
+	#readme-container {
+		width: 100%;
+		overflow-y: auto;
+		display: flex;
 		justify-content: center;
 	}
 
@@ -112,19 +139,31 @@
 </style>
 
 <section>
-	<div id="treeview">
-		<!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
-		<TreeView
-			path="AtelierNum"
-			files={[
-				{ path: "AtelierNum/templates", depthLimit: "3" },
-				{ path: "AtelierNum/unity_toolkit", depthLimit: "3" },
-			]}
-		/>
-	</div>
+	{#if showTree}
+		<div
+			id="treeview"
+			bind:this={treeView}
+			transition:fly={{ x: -treeView.clientWidth - typicalScrollBarWidth }}
+		>
+			<button
+				on:click={() => {
+					showTree = !showTree;
+				}}>&lt;&lt;</button
+			>
+			<!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
+			<TreeView path={$fileTree.path} files={$fileTree.children} />
+		</div>
+	{/if}
 	<div id="readme-container">
 		<div id="readme" on:click|preventDefault={redirectLinkInBrowser}>
 			{@html readmeContent ? readmeContent : noReadmeMessage}
 		</div>
 	</div>
 </section>
+
+<button
+	id="close-btn"
+	on:click={() => {
+		showTree = !showTree;
+	}}>&rt;&rt;</button
+>

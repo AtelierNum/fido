@@ -12,9 +12,7 @@
 	let readmes = { AtelierNum: "<span/>" };
 	let readmeElement;
 	let readmeContent = Object.values(readmes)[0];
-	let treeView; //the dom node
 	let showTree = true;
-	const typicalScrollBarWidth = 30;
 
 	const noReadmeMessage = `
 	<div style="height:100%;width:100%;display:flex;align-items:center;justify-content:center">
@@ -76,9 +74,11 @@
 	}
 
 	afterUpdate(() => {
-		readmeElement.querySelectorAll("pre code").forEach(block => {
-			hljs.highlightBlock(block);
-		});
+		if (readmeElement) {
+			readmeElement.querySelectorAll("pre code").forEach(block => {
+				hljs.highlightBlock(block);
+			});
+		}
 	});
 </script>
 
@@ -93,9 +93,9 @@
 	}
 
 	button {
-		width: 40px;
-		height: 40px;
-		margin: 20px;
+		width: var(--size-6);
+		height: var(--size-6);
+		margin: var(--size-4);
 		background-color: transparent;
 		border: none;
 		color: var(--color-primary-text);
@@ -114,9 +114,22 @@
 	}
 
 	#treeview {
+		position: relative;
 		background-color: var(--paper-2);
-		padding: 0.5em 0.5em 10em 0.5em;
+		padding: var(--size-4) var(--size-7) 10em 0.5em;
 		overflow-y: auto;
+	}
+
+	#treeview-closer {
+		position: absolute;
+		top: var(--size-2);
+		right: 0;
+	}
+
+	#treeview-opener {
+		position: absolute;
+		top: var(--size-5);
+		left: var(--size-5);
 	}
 
 	#readme {
@@ -128,10 +141,12 @@
 	}
 
 	#readme-container {
+		position: relative;
 		width: 100%;
 		overflow-y: auto;
 		display: flex;
 		justify-content: center;
+		grid-area: readme;
 	}
 
 	:global(#readme img) {
@@ -141,14 +156,11 @@
 
 <section>
 	{#if showTree}
-		<div
-			id="treeview"
-			bind:this={treeView}
-			transition:fly={{ x: -treeView.clientWidth - typicalScrollBarWidth }}
-		>
+		<div id="treeview">
 			<button
+				id="treeview-closer"
 				on:click={() => {
-					showTree = !showTree;
+					showTree = false;
 				}}>&lt;&lt;</button
 			>
 			<!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
@@ -156,7 +168,15 @@
 		</div>
 	{/if}
 	<div id="readme-container">
-		<div id="readme" on:click|preventDefault={redirectLinkInBrowser}>
+		{#if !showTree}
+			<button
+				id="treeview-opener"
+				on:click={() => {
+					showTree = true;
+				}}>&gt;&gt;</button
+			>
+		{/if}
+		<div id="readme" bind:this={readmeElement} on:click|preventDefault={redirectLinkInBrowser}>
 			{@html readmeContent ? readmeContent : noReadmeMessage}
 		</div>
 	</div>

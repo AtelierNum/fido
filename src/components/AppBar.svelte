@@ -94,6 +94,7 @@
 		background-color: var(--paper-3);
 		display: flex;
 		align-items: center;
+		padding: var(--size-2);
 	}
 
 	#bar > * {

@@ -22,6 +22,7 @@
 
 	const markdownImageSrc = /!\[\]\(.+\)/gi; //will also match image links
 	const markdownImageLink = /!\[\]\(http.+\)/gi;
+	const markdownLink = /.*\[.+\]\(http.+\)/gi;
 	const validUrl = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi;
 
 	// TODO : make it easier on the eyes
@@ -51,6 +52,13 @@
 								4,
 								-1
 							)}">`;
+						});
+
+						data = data.replaceAll(markdownLink, link => {
+							console.log(link);
+							return `<a href="${link.match(/\(.+\)/i)[0].slice(1, -1)}">${link
+								.match(/\[.+\]/i)[0]
+								.slice(1, -1)}</a>`;
 						});
 
 						data = data.replaceAll(/\[.+\]\(.+\)/gi, mdLink => {

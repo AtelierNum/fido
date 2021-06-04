@@ -65,7 +65,6 @@
 					!el.name.match(/^_/i)
 				)
 					files.push({ path: path + "/" + el.path.split("/").pop() });
-				console.dir(files);
 			});
 
 			expanded = !expanded;

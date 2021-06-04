@@ -7,9 +7,7 @@
 	export let depthLimit;
 	export let path;
 
-	function appendNode() {
-		console.log("lol");
-	}
+	function appendNode() {}
 </script>
 
 <Node onToggle={appendNode} {expanded} {files} {depthLimit} {path} />

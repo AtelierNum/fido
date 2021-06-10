@@ -1,4 +1,4 @@
-<script>
+<!--<script>
 	import Node from "./Node.svelte";
 	import { fileTree } from "../../store";
 
@@ -8,6 +8,4 @@
 	export let path;
 
 	function appendNode() {}
-</script>
-
-<Node onToggle={appendNode} {expanded} {files} {depthLimit} {path} />
+</script><Node onToggle={appendNode} {expanded} {files} {depthLimit} {path} /> -->

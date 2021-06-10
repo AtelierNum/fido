@@ -1,11 +1,12 @@
 <script>
 	import marked from "marked";
-	import { focusedGitHubPath, fileTree } from "../store";
+	import { focusedGitHubPath, repoTree } from "../store";
 	import { afterUpdate } from "svelte";
 	import { fly } from "svelte/transition";
 	import hljs from "highlight.js";
 
 	import TreeView from "../components/TreeView/TreeView.svelte";
+	import AltTree from "../components/AltTree/AltTree.svelte";
 
 	export let ipcRenderer;
 
@@ -172,7 +173,7 @@
 				}}>&lt;&lt;</button
 			>
 			<!-- TODO replace these hardecoded top level folder with an array generated from a (enum||whitelist).json -->
-			<TreeView path={$fileTree.path} files={$fileTree.children} />
+			<AltTree tree={$repoTree} />
 		</div>
 	{/if}
 	<div id="readme-container">

@@ -27,21 +27,48 @@ export const removeToastById = id => {
 	toasts.update(toasts => toasts.filter(e => e.id != id));
 };
 
-export const fileTree = writable({
+// export const fileTree = writable({
+// 	path: "AtelierNum",
+// 	expanded: true,
+// 	children: [
+// 		{
+// 			path: "AtelierNum/templates",
+// 			expanded: false,
+// 			children: null,
+// 			depthLimit: "3",
+// 		},
+// 		{
+// 			path: "AtelierNum/unity_toolkit",
+// 			expanded: false,
+// 			children: null,
+// 			depthLimit: "3",
+// 		},
+// 	],
+// });
+
+//children null means "unfetched"
+//children {} means "fetched but nothing came back"
+export const repoTree = writable({
 	path: "AtelierNum",
 	expanded: true,
-	children: [
-		{
+	children: {
+		templates: {
 			path: "AtelierNum/templates",
 			expanded: false,
-			children: null,
 			depthLimit: "3",
+			children: {
+				NodeJS: {
+					path: "AtelierNum/templates/NodeJS",
+					expanded: false,
+					children: null,
+				},
+			},
 		},
-		{
+		unity_toolkit: {
 			path: "AtelierNum/unity_toolkit",
 			expanded: false,
-			children: null,
+			children: {},
 			depthLimit: "3",
 		},
-	],
+	},
 });

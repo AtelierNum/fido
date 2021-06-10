@@ -66,7 +66,7 @@
 					currentNode.children[elementPath] = {
 						path: elementPath,
 						expanded: false,
-						childre: null,
+						children: null,
 						metadata: null,
 					};
 				}

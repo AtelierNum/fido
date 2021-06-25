@@ -1,7 +1,4 @@
 <script>
-	//TODO might be nice to split the root element as its own component
-	// ... given all the tweaks here to accomodate both normal nodes and root behavior
-
 	/*typical data object for a Node
     {
         path:string
@@ -25,7 +22,6 @@
 	let selected = false;
 
 	$: name = currentNode.path.split("/").pop() || "missing name";
-	$: depth = currentNode.path.split("/").length;
 
 	const isRootPath = path => path.split("/").length == 1;
 
@@ -52,8 +48,33 @@
 				)
 			).json();
 
-			currentNode.children = {};
+			if (content.find(el => el.name == ".fido.json")) {
+				currentNode.metadata = await (
+					await fetch(
+						`https://raw.githubusercontent.com/${fetchArgs
+							.slice(0, 2)
+							.join("/")}/main/${fetchArgs.slice(2).join("/")}/.fido.json`
+					)
+				).json();
+			}
 
+			//TODO attempt to fetch the metadata for all dirs
+			//probably try to use Promise.allSettled
+			const metadataPromises = content.map(el => {
+				if (el.type == "dir") {
+					return fetch(
+						`https://raw.githubusercontent.com/${fetchArgs
+							.slice(0, 2)
+							.join("/")}/main/${fetchArgs.slice(2).join("/")}/${el.name}/.fido.json`
+					).then(res => res.json());
+				}
+			});
+
+			(await Promise.allSettled(metadataPromises)).forEach(p =>
+				console.dir((p.status = "fulfilled" ? p.value : "rejected"))
+			);
+
+			currentNode.children = {};
 			content.forEach(el => {
 				if (
 					el.type == "dir" &&
@@ -61,8 +82,6 @@
 					!el.name.match(/^_/i)
 				) {
 					const elementPath = currentNode.path + "/" + el.path.split("/").pop();
-					console.log("elementPath", elementPath);
-					console.log("currentNode.path", currentNode.path);
 					currentNode.children[elementPath] = {
 						path: elementPath,
 						expanded: false,
@@ -75,9 +94,8 @@
 			currentNode.expanded = !currentNode.expanded;
 			loaded = true;
 			loading = false;
+			console.dir(tree);
 		}
-
-		console.dir(tree);
 	}
 
 	function selectReadme() {
@@ -140,14 +158,14 @@
 	<div>{name}</div>
 </span>
 
-{#if currentNode.expanded}
+{#if currentNode.expanded && currentNode.children}
 	<ul transition:fly|local={{ y: -20 }}>
 		{#each Object.keys(currentNode.children) as childKey}
 			<li>
-				{#if currentNode.children != null && Object.keys(currentNode.children).length > 0}
-					<svelte:self currentNode={currentNode.children[childKey]} {tree} />
-				{:else}
+				{#if currentNode.metadata}
 					<Leaf {...currentNode} />
+				{:else}
+					<svelte:self currentNode={currentNode.children[childKey]} {tree} />
 				{/if}
 			</li>
 		{/each}

@@ -56,7 +56,6 @@
 						});
 
 						data = data.replaceAll(markdownLink, link => {
-							console.log(link);
 							return `<a href="${link.match(/\(.+\)/i)[0].slice(1, -1)}">${link
 								.match(/\[.+\]/i)[0]
 								.slice(1, -1)}</a>`;
